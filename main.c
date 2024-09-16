@@ -1,28 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "include/collections.h"
+#include "include/hashMap.h"
 
 int main(){
-    printf("\n Initializing program... \n");
-    int data1 = 10, data2 = 20, data3 = 30;
-    
-    LinkedList linkedList;
-    linkedList.head = createNode(&data1);
-    printf("\n Created list: %p", &linkedList);
+    printf("Initializing hash map... \n \n");
+    HashMap hashMap;
+    createHashMap(&hashMap);
 
-    linkNode(&linkedList, &data2);
-    linkNode(&linkedList, &data3);
-    printf("\n Linked data: %d into %p", data2, &linkedList);
+    printf("\n Adding keypairs...");
+    int value1 = 15, value2 = 25;
+    add(&hashMap, "Banana", &value1);
+    add(&hashMap, "Apple", &value2);
 
-    int* gotData = getData(&linkedList, 1);
-    printf("\n Got data '%d' from %p", *gotData, &linkedList);
-    gotData = getData(&linkedList, 2);
-    printf("\n Got data '%d' from %p", *gotData, &linkedList);
+    printf("\n Reading values...");
+    printf("\n Value of banana: %i", (int)get(&hashMap, "Banana"));
+    printf("\n Value of apple: %i", (int)get(&hashMap, "Apple"));
 
-    clear(&linkedList);
-    printf("\n Cleared list.");
+    printf("\n Modifying values...");
+    value1 = 22, value2 = 36;
+    add(&hashMap, "Banana", &value1);
+    add(&hashMap, "Apple", &value2);
+
+    printf("\n Reading values...");
+    printf("\n Value of banana: %i", (int)get(&hashMap, "Banana"));
+    printf("\n Value of apple: %i", (int)get(&hashMap, "Apple"));
+
+    printf("\n Clearing hashmap...");
+    clear(&hashMap);
 
     system("pause");
-
+    
     return 0;
 }
