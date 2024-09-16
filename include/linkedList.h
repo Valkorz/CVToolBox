@@ -1,19 +1,12 @@
-#ifndef COLLECTIONS_H
-#define COLLECTIONS_H
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
 #include <stdlib.h>
 #include <stdio.h>
 
 /*
-    THIS HEADER DEFINES DATA DIFFERENT DATA STRUCTURES SUCH AS:
-        -LINKED LIST
-        -QUEUE
-        -FIFO
-        -LIFO
+    |||| LINKED LIST |||
 
-    REFER TO TREES_H AND GRAPHS_H FOR COMPLEX DATA STRUCTURES.
 */
-
-// Node that holds data and points to the next node in the list
 typedef struct Node{
     void *data;
     struct Node *next;
@@ -32,6 +25,7 @@ Node* createNode(void* data){
     return newNode;
 }
 
+//Link a node to a LinkedList, if it already has a non-null head Node.
 void linkNode(LinkedList* targetList, void* data){
     Node* targetNode = NULL;
     Node* currentNode = targetList->head;
@@ -59,7 +53,7 @@ void linkNode(LinkedList* targetList, void* data){
     printf("\n Set next node %p to target node: %d", newNode, targetNode);
 }
 
-//Search the list for data
+//Search the LinkedList for data in a specified index
 void* getData(LinkedList* targetList, int index){
     int currentIndex = 0;
     Node* currentNode = targetList->head;
@@ -79,7 +73,7 @@ void* getData(LinkedList* targetList, int index){
     }
 }
 
-//Clear entire list and the reserved memory
+//Clear entire LinkedList and the reserved memory
 void clear(LinkedList* linkedList){
     Node* currentNode = linkedList->head;
     Node* nextNode;

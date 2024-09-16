@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../include/collections.h"
+#include "../../include/linkedList.h"
 
 int main(){
     printf("\n Initializing program... \n");
