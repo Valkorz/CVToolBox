@@ -16,7 +16,7 @@
 // Node that holds data and points to the next node in the list
 typedef struct Node{
     void *data;
-    Node *next;
+    struct Node *next;
 } Node;
 
 // Holds root node
