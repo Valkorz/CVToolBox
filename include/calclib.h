@@ -6,7 +6,7 @@
 
 int factorial(int x);
 
-//gets the nth prime number using the C. P. Williams formula (1964)
+//gets the nth prime number using the C. P. Williams formula (1964). Gotta fix this crap, ain't working
 float prime(int n){
     float res = 1;
     for(int i = 1; i <= pow(2, n); i++){

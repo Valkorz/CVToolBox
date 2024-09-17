@@ -32,11 +32,11 @@ void createHashMap(HashMap* hashMap){
 
 //adds or modifies a value into the hash map with a specified key.
 void add(HashMap* hashMap, char* key, void* value){
-    printf("Adding entry '%s':'%p' to %p", key, value, hashMap);
+    printf("\nAdding entry '%s':'%p' to %p", key, value, hashMap);
 
     int i = 0;
     Hash* currentHash = NULL;
-    for(i < hashMap->size; i++;){
+    for(i = 0;i < hashMap->size; i++){
         currentHash = hashMap->map + i; 
         if(currentHash->key == key){
             currentHash->value = value;
@@ -45,14 +45,15 @@ void add(HashMap* hashMap, char* key, void* value){
         if(currentHash->key == NULL){
             currentHash->value = value;
             currentHash->key = key;
-            break;
+            printf("\n Set key %s to %p in hash: %p", key, value, currentHash);
+            return;
         }
     }
 
     int newSize = hashMap->size + DEFAULT_START_SIZE;
     Hash* newMap = (Hash*)realloc(hashMap->map, sizeof(Hash) * newSize);
     if(newMap == NULL){
-        fprintf(stderr, "Failed to reallocate memory for hash map\n");
+        fprintf(stderr, "\nFailed to reallocate memory for hash map\n");
         return;
     }
 
@@ -66,6 +67,7 @@ void add(HashMap* hashMap, char* key, void* value){
 
     hashMap->map[newSize - DEFAULT_START_SIZE].key = key;
     hashMap->map[newSize - DEFAULT_START_SIZE].value = value;
+    printf("\n Resized hashmap to: %d entries.\n", newSize);
 }
 
 //Removes a specified keyvalue from the hashmap. Throws an error if key is not found.
@@ -73,7 +75,7 @@ void removeEntry(HashMap* hashMap, char* key){
     int i = 0;
     Hash* currentHash = hashMap->map + i;
 
-    for(i < hashMap->size; i++;){
+    for(i = 0; i < hashMap->size; i++){
         currentHash = hashMap->map + i;
         if(currentHash->key == key){
             currentHash->value = NULL;
@@ -81,24 +83,34 @@ void removeEntry(HashMap* hashMap, char* key){
             return;
         }
     }
-    fprintf(stderr, "Key %s not found in %p.\n", key, hashMap);
+    fprintf(stderr, "\nKey %s not found in %p.\n", key, hashMap);
 }
 
 //Returns a pointer to the value defined by the key in the hashmap
 void* get(HashMap* hashMap, char* key){
     int i = 0;
     Hash* currentHash = hashMap->map + i;
-
-    for(i < hashMap->size; i++;){
+    for(i = 0; i < hashMap->size; i++){
+        printf("\n Reading hash: %p...", currentHash);
         currentHash = hashMap->map + i;
         if(currentHash->key == key){
             return currentHash->value;
         }
     }
-    fprintf(stderr, "Key %s not found in %p.\n", key, hashMap);
+    fprintf(stderr, "\nKey %s not found in %p.\n", key, hashMap);
+    return NULL;
 }
 
-void clear(HashMap* hashMap){
+void printAll(HashMap* hashMap){
+    int i = 0;
+    Hash* currentHash = hashMap->map + i;
+    for(i = 0; i < hashMap->size; i++){
+        currentHash = hashMap->map + i;
+        printf("\n {%s:%s}", currentHash->key, *(char*)currentHash->value);
+    }
+}
+
+void clearMap(HashMap* hashMap){
     free(hashMap->map);
 }
 

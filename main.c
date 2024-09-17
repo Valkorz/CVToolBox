@@ -4,35 +4,29 @@
 #include "include/calclib.h"
 
 int main(){
-    // printf("Initializing hash map... \n \n");
-    // HashMap hashMap;
-    // createHashMap(&hashMap);
+    printf("Initializing hash map... \n \n");
+    HashMap hashMap;
+    createHashMap(&hashMap);
 
-    // printf("\n Adding keypairs...");
-    // int value1 = 15, value2 = 25;
-    // add(&hashMap, "Banana", &value1);
-    // add(&hashMap, "Apple", &value2);
+    char stdinVal = ' ';
+    do{
+        if(stdinVal == 'q' || stdinVal == 'Q') break;
+        printf("\n Add a new key: ");
+        char key[100], value[100];
+        gets(key);
+        printf("\n Add a value for it: ");
+        gets(value);
+        add(&hashMap, key, value);
 
-    // printf("\n Reading values...");
-    // printf("\n Value of banana: %i", (int)get(&hashMap, "Banana"));
-    // printf("\n Value of apple: %i", (int)get(&hashMap, "Apple"));
+        printf("\n \n adding into hash map... \n Press Q to quit or ENTER to add more.");
+        scanf("%c", &stdinVal);
+    }while(stdinVal != 'q' || stdinVal != 'Q');
 
-    // printf("\n Modifying values...");
-    // value1 = 22, value2 = 36;
-    // add(&hashMap, "Banana", &value1);
-    // add(&hashMap, "Apple", &value2);
+    printf("\n Entries: \n");
+    printAll(&hashMap);
 
-    // printf("\n Reading values...");
-    // printf("\n Value of banana: %i", (int)get(&hashMap, "Banana"));
-    // printf("\n Value of apple: %i", (int)get(&hashMap, "Apple"));
-
-    // printf("\n Clearing hashmap...");
-    // clear(&hashMap);
-    printf("Factorial of 0: %d", factorial(0));
-    printf("\n prime number 2: %.2f", prime(2));
-    // for(int i = 1; i <= 10; i++){
-    //     printf("\n prime number %d: %d", i, prime(i));
-    // }
+    printf("\n Clearing hashmap...");
+    clearMap(&hashMap);
 
     system("pause");
     
