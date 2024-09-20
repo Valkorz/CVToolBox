@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "include/hashMap.h"
-#include "include/calclib.h"
-#include "include/typematch.h"
+#include "../../include/hashMap.h"
+#include "../../include/calclib.h"
+#include "../../include/typematch.h"
 
 int main(){
     printf("Initializing hash map... \n \n");

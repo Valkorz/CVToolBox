@@ -3,10 +3,11 @@
 #define DEFAULT_START_SIZE 10
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct Hash{
     char* key;
-    void* value;
+    char* value;
 } Hash;
 
 typedef struct HashMap{
@@ -20,7 +21,7 @@ void createHashMap(HashMap* hashMap){
 
     //Loop to set all hashes to null, just to make sure.
     int i = 0;
-    for(i < DEFAULT_START_SIZE; i++;){
+    for(i = 0; i < DEFAULT_START_SIZE; i++){
         newMap[i].key = NULL;
         newMap[i].value = NULL;
     }
@@ -31,21 +32,24 @@ void createHashMap(HashMap* hashMap){
 }
 
 //adds or modifies a value into the hash map with a specified key.
-void add(HashMap* hashMap, char* key, void* value){
-    printf("\nAdding entry '%s':'%p' to %p", key, value, hashMap);
+void add(HashMap* hashMap, char* _key, char* value){
+    printf("\nAdding entry '%s':'%p' to %p", _key, value, hashMap);
 
     int i = 0;
     Hash* currentHash = NULL;
     for(i = 0;i < hashMap->size; i++){
         currentHash = hashMap->map + i; 
-        if(currentHash->key == key){
-            currentHash->value = value;
+        printf("\n current key: %s", currentHash->key);
+        if(currentHash->key == NULL){
+            currentHash->value = strdup(value);
+            currentHash->key = strdup(_key);
+            printf("\n Set key %s to %p in hash: %p. depth: %d", _key, value, currentHash, i);
             return;
         }
-        if(currentHash->key == NULL){
-            currentHash->value = value;
-            currentHash->key = key;
-            printf("\n Set key %s to %p in hash: %p", key, value, currentHash);
+        printf("\n is %s equal to %s? %d", currentHash->key, _key, strcmp(currentHash->key, _key));
+        if(strcmp(currentHash->key, _key) == 0){
+            currentHash->value = strdup(value);
+            printf("\n Modified key %s to %p in hash: %p. depth: %d", currentHash->key, value, currentHash, i);
             return;
         }
     }
@@ -65,8 +69,8 @@ void add(HashMap* hashMap, char* key, void* value){
     hashMap->map = newMap;
     hashMap->size = newSize;
 
-    hashMap->map[newSize - DEFAULT_START_SIZE].key = key;
-    hashMap->map[newSize - DEFAULT_START_SIZE].value = value;
+    hashMap->map[newSize - DEFAULT_START_SIZE].key = strdup(_key);
+    hashMap->map[newSize - DEFAULT_START_SIZE].value = strdup(value);
     printf("\n Resized hashmap to: %d entries.\n", newSize);
 }
 
@@ -87,18 +91,18 @@ void removeEntry(HashMap* hashMap, char* key){
 }
 
 //Returns a pointer to the value defined by the key in the hashmap
-void* get(HashMap* hashMap, char* key){
+void get(HashMap* hashMap, char* key, char* target){
     int i = 0;
     Hash* currentHash = hashMap->map + i;
     for(i = 0; i < hashMap->size; i++){
         printf("\n Reading hash: %p...", currentHash);
         currentHash = hashMap->map + i;
         if(currentHash->key == key){
-            return currentHash->value;
+            target = currentHash->value;
         }
     }
     fprintf(stderr, "\nKey %s not found in %p.\n", key, hashMap);
-    return NULL;
+    target = NULL;
 }
 
 void printAll(HashMap* hashMap){
@@ -106,7 +110,7 @@ void printAll(HashMap* hashMap){
     Hash* currentHash = hashMap->map + i;
     for(i = 0; i < hashMap->size; i++){
         currentHash = hashMap->map + i;
-        printf("\n {%s:%s}", currentHash->key, *(char*)currentHash->value);
+        printf("\n {%s:%s}", currentHash->key, currentHash->value);
     }
 }
 
