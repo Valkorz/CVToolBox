@@ -4,6 +4,8 @@
 #include <stdio.h>
 
 // Implements a non-linear data structure where each node has at most two children.
+
+//Search algorithm
 enum SearchType
 {
     DEPTH_FIRST_PREORDER,
@@ -13,6 +15,7 @@ enum SearchType
     LEVEL_ORDER_REVERSE
 };
 
+//Tree node that can point to two child nodes, hold data and have a unique ID
 typedef struct TreeNode
 {
     int data;
@@ -21,6 +24,7 @@ typedef struct TreeNode
     struct TreeNode *right;
 } TreeNode;
 
+//Tree that stores the node count and root.
 typedef struct BinaryTree
 {
     unsigned int count;
@@ -42,6 +46,7 @@ TreeNode *pop(TreeNode **stack, unsigned int size);
 int isEmpty(TreeNode **stack, unsigned int size);
 int entries(TreeNode **stack, unsigned int size);
 
+//Gets address of BinaryTree pointer, allocates memory and adds a new Root node.
 void newTree(BinaryTree **binaryTree, int rootData)
 {
     *binaryTree = (BinaryTree *)malloc(sizeof(BinaryTree));
@@ -64,8 +69,16 @@ void newTree(BinaryTree **binaryTree, int rootData)
     printf("\n Created new binary tree in address %p. with count %d", *binaryTree, (*binaryTree)->count);
 }
 
+//Gets the pointer to the target BinaryTree and allocates memory for a new node. New node is added as a child
+//of another node in the tree under a specified parentId.
+//Once the parent node has been located and an instance of the newNode has been generated, it will be added as a child
+//If the parent node contains a NULL pointer available.
+//If both branches (left node pointer and right node pointer) are NULL, then the node will be first pointed within the
+//left branch. Otherwise it goes to the right branch.
+//DFS prioritizes top-to-bottom and left-to-right node search.
 void addNode(BinaryTree *tree, int data, unsigned long parentId, enum SearchType searchType)
 {
+    //Perform lookup on the tree to find target node. Default algorithm: Depth-First-Search (pre-order)
     TreeNode *parent = idGetNode(tree, parentId, searchType);
     TreeNode *newNode = (TreeNode *)malloc(sizeof(TreeNode));
 
@@ -95,23 +108,27 @@ void addNode(BinaryTree *tree, int data, unsigned long parentId, enum SearchType
     printf("Could not add newNode %p of data %d to parent %p.", newNode, data, parent);
 }
 
+//Performs node lookup for a specific ID. Default algorithm is Depth First Search (Pre-order)
 TreeNode *idGetNode(BinaryTree *tree, unsigned long id, enum SearchType searchType)
 {
 
     switch (searchType)
     {
-    case DEPTH_FIRST_PREORDER:
-        return depthFirst_preorder(tree, id);
     case DEPTH_FIRST_INORDER:
     case DEPTH_FIRST_POSTORDER:
     case LEVEL_ORDER:
     case LEVEL_ORDER_REVERSE:
         break;
+    default:
+        return depthFirst_preorder(tree, id);
     }
-    return (TreeNode *)malloc(sizeof(TreeNode));
+    return NULL;
 }
 
 // Search binary tree depth-first preorder and return the node with the specified ID
+//Search priority is top-to-bottom and left-to-right. Will go to the lowest point while
+//Adding other nodes into the stack. Visits each node by grabbing the next one from the
+//top of the stack using FILO (First-In-Last-Out)
 TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId)
 {
     printf("\n Starting depth-first preorder search on tree %p. \n Looking for target: %ld \n", tree, targetId);
@@ -131,14 +148,18 @@ TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId)
 
     for (i = 0; i < size; i++)
     {
+        //break if target node is found
         if (current->id == targetId)
             break;
 
+        //break if stack is empty (lookup finished)
         if (isEmpty(stack, size))
         {
             printf("\n stack is empty.");
             break;
         }
+
+        //Right nodes have a lower priority thus they're pushed lower into the stack.
         if (current->right != NULL)
             push(stack, current->right, size);
         if (current->left != NULL)
@@ -174,6 +195,7 @@ TreeNode **newStack(unsigned int size)
     return stack;
 }
 
+//Performs reverse search to find the first non-null entry of the stack to index new entry.
 void push(TreeNode **stack, TreeNode *node, unsigned int size)
 {
     int i;
@@ -188,6 +210,7 @@ void push(TreeNode **stack, TreeNode *node, unsigned int size)
     }
 }
 
+//Pops top-most entry in the stack.
 TreeNode *pop(TreeNode **stack, unsigned int size)
 {
     int i;
@@ -205,6 +228,7 @@ TreeNode *pop(TreeNode **stack, unsigned int size)
     return target;
 }
 
+//Checks every pointer in the stack. Returns 1 if the stack is empty, otherwise 0.
 int isEmpty(TreeNode **stack, unsigned int size)
 {
     int i;
@@ -216,6 +240,7 @@ int isEmpty(TreeNode **stack, unsigned int size)
     return 1;
 }
 
+//Counts the number of non-null entries in the stack.
 int entries(TreeNode **stack, unsigned int size)
 {
     int i, total = 0;
