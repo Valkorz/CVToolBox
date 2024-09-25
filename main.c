@@ -5,19 +5,22 @@
 #include "include/typematch.h"
 #include "include/bintree.h"
 
-int main(){
+int main()
+{
 
-    //Create tree
-    BinaryTree tree;
+    // Create tree
+    BinaryTree *tree;
     newTree(&tree, 10);
 
-    //Add some nodes...
-    addNode(&tree, 5, 0, DEPTH_FIRST_PREORDER);
-    addNode(&tree, 5, 1, DEPTH_FIRST_PREORDER);
-    addNode(&tree, 5, 1, DEPTH_FIRST_PREORDER);
-    addNode(&tree, 5, 0, DEPTH_FIRST_PREORDER);
+    printf("\n Tree count: %d", tree->count);
+
+    // Add some nodes...
+    addNode(tree, 5, 0, DEPTH_FIRST_PREORDER);
+    addNode(tree, 5, 1, DEPTH_FIRST_PREORDER);
+    addNode(tree, 5, 1, DEPTH_FIRST_PREORDER);
+    addNode(tree, 5, 0, DEPTH_FIRST_PREORDER);
 
     system("pause");
-    
+
     return 0;
 }
