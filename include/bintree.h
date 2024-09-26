@@ -4,6 +4,12 @@
 #include <stdio.h>
 
 // Implements a non-linear data structure where each node has at most two children.
+/* 
+    TODO:
+    - implement functions to search nodes based on specific parameters
+    - implement functionality to visually represent nodes
+    - implement function to clear tree memory.
+*/
 
 //Search algorithm
 enum SearchType
@@ -36,7 +42,7 @@ void newTree(BinaryTree **binaryTree, int rootData);
 void addNode(BinaryTree *tree, int data, unsigned long parentId, enum SearchType searchType);
 void removeNode(BinaryTree *tree, unsigned long id);
 void clearBinaryTree(BinaryTree *tree, enum SearchType searchType);
-TreeNode *idGetNode(BinaryTree *tree, unsigned long id, enum SearchType searchType);
+TreeNode *getNode(BinaryTree *tree, unsigned long id, enum SearchType searchType);
 TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId);
 TreeNode *depthFirst_inorder(BinaryTree *tree);
 TreeNode *depthFirst_postorder(BinaryTree *tree);
@@ -45,6 +51,7 @@ void push(TreeNode **stack, TreeNode *node, unsigned int size);
 TreeNode *pop(TreeNode **stack, unsigned int size);
 int isEmpty(TreeNode **stack, unsigned int size);
 int entries(TreeNode **stack, unsigned int size);
+void printStack(TreeNode** stack, unsigned int size);
 
 //Gets address of BinaryTree pointer, allocates memory and adds a new Root node.
 void newTree(BinaryTree **binaryTree, int rootData)
@@ -79,7 +86,7 @@ void newTree(BinaryTree **binaryTree, int rootData)
 void addNode(BinaryTree *tree, int data, unsigned long parentId, enum SearchType searchType)
 {
     //Perform lookup on the tree to find target node. Default algorithm: Depth-First-Search (pre-order)
-    TreeNode *parent = idGetNode(tree, parentId, searchType);
+    TreeNode *parent = getNode(tree, parentId, searchType);
     TreeNode *newNode = (TreeNode *)malloc(sizeof(TreeNode));
 
     newNode->id = tree->count;
@@ -109,7 +116,7 @@ void addNode(BinaryTree *tree, int data, unsigned long parentId, enum SearchType
 }
 
 //Performs node lookup for a specific ID. Default algorithm is Depth First Search (Pre-order)
-TreeNode *idGetNode(BinaryTree *tree, unsigned long id, enum SearchType searchType)
+TreeNode *getNode(BinaryTree *tree, unsigned long id, enum SearchType searchType)
 {
 
     switch (searchType)
@@ -149,13 +156,15 @@ TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId)
     for (i = 0; i < size; i++)
     {
         //break if target node is found
+        printStack(stack, size);
+        printf("\n current id: %ld", current->id);
         if (current->id == targetId)
             break;
 
         //break if stack is empty (lookup finished)
         if (isEmpty(stack, size))
         {
-            printf("\n stack is empty.");
+            // printf("\n stack is empty.");
             break;
         }
 
@@ -221,8 +230,7 @@ TreeNode *pop(TreeNode **stack, unsigned int size)
         {
             target = *(stack + i);
             *(stack + i) = NULL;
-            system("pause");
-            printf("\n Found entry. Value is now %p and target is now %p. \n", *(stack + i), target);
+            // printf("\n Found entry. Value is now %p and target is now %p. \n", *(stack + i), target);
         }
     }
     return target;
@@ -252,9 +260,23 @@ int entries(TreeNode **stack, unsigned int size)
             // printf("\n not null!");
             total++;
             // } else printf("\n null!");
-            system("pause");
         }
         return total;
+    }
+}
+
+void printStack(TreeNode** stack, unsigned int size){
+    int i;
+    for (i = 0; i < size; i++)
+    {
+        if (*(stack + i) != NULL)
+        {
+            printf("\n [%d]: Node of id: %ld", i, (*(stack + i))->id);
+        }
+        else{
+            printf("\n [%d]: NULL.");
+        }
+        
     }
 }
 
