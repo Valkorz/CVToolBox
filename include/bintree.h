@@ -156,7 +156,7 @@ TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId)
     for (i = 0; i < size; i++)
     {
         //break if target node is found
-        printStack(stack, size);
+        // printStack(stack, size);
         printf("\n current id: %ld", current->id);
         if (current->id == targetId)
             break;
@@ -169,10 +169,16 @@ TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId)
         }
 
         //Right nodes have a lower priority thus they're pushed lower into the stack.
-        if (current->right != NULL)
+        if (current->right != NULL){
+            // printf("\n RIGHT");
+            // printf("\n right node for %ld: %ld", current->id, current->right->id);
             push(stack, current->right, size);
-        if (current->left != NULL)
+        }
+        if (current->left != NULL){
+            // printf("\n LEFT");
+            // printf("\n left node for %ld: %ld", current->id, current->left->id);
             push(stack, current->left, size);
+        }
         current = pop(stack, size);
     }
 
@@ -213,7 +219,7 @@ void push(TreeNode **stack, TreeNode *node, unsigned int size)
         if (*(stack + i) == NULL)
         {
             *(stack + i) = node;
-            printf("\n found space: %p \n", *(stack + i));
+            printf("\n found space: %p for %p\n", *(stack + i), node);
             break;
         }
     }
@@ -231,6 +237,8 @@ TreeNode *pop(TreeNode **stack, unsigned int size)
             target = *(stack + i);
             *(stack + i) = NULL;
             // printf("\n Found entry. Value is now %p and target is now %p. \n", *(stack + i), target);
+            printf("\n popping %ld from stack.", target->id);
+            break;
         }
     }
     return target;
