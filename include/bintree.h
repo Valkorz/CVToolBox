@@ -39,11 +39,12 @@ typedef struct BinaryTree
 
 // Functions
 void newTree(BinaryTree **binaryTree, int rootData);
-void addNode(BinaryTree *tree, int data, unsigned long parentId, enum SearchType searchType);
+void addNode(BinaryTree *tree, int data, long parentId, enum SearchType searchType);
+void addNodeFirst(BinaryTree *tree, int data, enum SearchType searchType);
 void removeNode(BinaryTree *tree, unsigned long id);
 void clearBinaryTree(BinaryTree *tree, enum SearchType searchType);
 TreeNode *getNode(BinaryTree *tree, unsigned long id, enum SearchType searchType);
-TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId);
+TreeNode *depthFirst_preorder(BinaryTree *tree, long targetId);
 TreeNode *depthFirst_inorder(BinaryTree *tree);
 TreeNode *depthFirst_postorder(BinaryTree *tree);
 TreeNode **newStack(unsigned int size);
@@ -52,6 +53,7 @@ TreeNode *pop(TreeNode **stack, unsigned int size);
 int isEmpty(TreeNode **stack, unsigned int size);
 int entries(TreeNode **stack, unsigned int size);
 void printStack(TreeNode** stack, unsigned int size);
+void printTree(TreeNode* rootNode, int space);
 
 //Gets address of BinaryTree pointer, allocates memory and adds a new Root node.
 void newTree(BinaryTree **binaryTree, int rootData)
@@ -83,7 +85,8 @@ void newTree(BinaryTree **binaryTree, int rootData)
 //If both branches (left node pointer and right node pointer) are NULL, then the node will be first pointed within the
 //left branch. Otherwise it goes to the right branch.
 //DFS prioritizes top-to-bottom and left-to-right node search.
-void addNode(BinaryTree *tree, int data, unsigned long parentId, enum SearchType searchType)
+//If parentId == -1, then the node will be added to the first found node with any empty children (left-right priority)
+void addNode(BinaryTree *tree, int data, long parentId, enum SearchType searchType)
 {
     //Perform lookup on the tree to find target node. Default algorithm: Depth-First-Search (pre-order)
     TreeNode *parent = getNode(tree, parentId, searchType);
@@ -115,10 +118,16 @@ void addNode(BinaryTree *tree, int data, unsigned long parentId, enum SearchType
     printf("Could not add newNode %p of data %d to parent %p.", newNode, data, parent);
 }
 
+//Adds a new node to the tree with a specified search algorithm.
+// differently from addNode(*,*,*,*), addNodeFirst will add the node to the
+// highest available spot in the binary tree structure.
+void addNodeFirst(BinaryTree* tree, int data, enum SearchType searchType){
+
+}
+
 //Performs node lookup for a specific ID. Default algorithm is Depth First Search (Pre-order)
 TreeNode *getNode(BinaryTree *tree, unsigned long id, enum SearchType searchType)
 {
-
     switch (searchType)
     {
     case DEPTH_FIRST_INORDER:
@@ -132,11 +141,16 @@ TreeNode *getNode(BinaryTree *tree, unsigned long id, enum SearchType searchType
     return NULL;
 }
 
+
+//TARGET-ID MODE:
 // Search binary tree depth-first preorder and return the node with the specified ID
 //Search priority is top-to-bottom and left-to-right. Will go to the lowest point while
 //Adding other nodes into the stack. Visits each node by grabbing the next one from the
-//top of the stack using FILO (First-In-Last-Out)
-TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId)
+//top of the stack using FILO (First-In-Last-Out).
+//###
+//FIRST-LOOKUP MODE:
+//Set the target ID to (-1) if you want to return the first node with NULL children instead.
+TreeNode *depthFirst_preorder(BinaryTree *tree, long targetId)
 {
     printf("\n Starting depth-first preorder search on tree %p. \n Looking for target: %ld \n", tree, targetId);
 
@@ -156,27 +170,28 @@ TreeNode *depthFirst_preorder(BinaryTree *tree, unsigned long targetId)
     for (i = 0; i < size; i++)
     {
         //break if target node is found
-        // printStack(stack, size);
-        printf("\n current id: %ld", current->id);
-        if (current->id == targetId)
+        printf("\n current id: %ld. Left: %p, Right: %p", current->id, current->left, current->right);
+        if (targetId > -1 && current->id == targetId)
             break;
+        else if(targetId == -1){
+            //First NULL search mode: will return the first node with 1 or more null children instead of ID lookup
+            if(current->right == NULL || current->left == NULL){
+                printf("Getting first node containing any null children: %p", current);
+                break;
+            }
+        }
 
         //break if stack is empty (lookup finished)
         if (isEmpty(stack, size))
         {
-            // printf("\n stack is empty.");
             break;
         }
 
         //Right nodes have a lower priority thus they're pushed lower into the stack.
         if (current->right != NULL){
-            // printf("\n RIGHT");
-            // printf("\n right node for %ld: %ld", current->id, current->right->id);
             push(stack, current->right, size);
         }
         if (current->left != NULL){
-            // printf("\n LEFT");
-            // printf("\n left node for %ld: %ld", current->id, current->left->id);
             push(stack, current->left, size);
         }
         current = pop(stack, size);
@@ -286,6 +301,21 @@ void printStack(TreeNode** stack, unsigned int size){
         }
         
     }
+}
+
+//Prints the whole tree recursively and visually.
+void printTree(TreeNode* node, int space){
+    if(node == NULL) return;
+
+    //Increase indentation gap for each level
+    space += 10;
+
+    printTree(node->right, space);
+    printf("\n");
+    for(int i = 0; i < space; i++)
+        printf(" ");
+    printf("%d\n", node->data);
+    printTree(node->left, space);
 }
 
 #endif
