@@ -10,8 +10,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "console": true,
-            "preLaunchTask": "build"
+            "console": true
         }
     ]
 }
