@@ -42,7 +42,6 @@ typedef struct BinaryTree
 // Functions
 void newTree(BinaryTree **binaryTree, int rootData);
 void addNode(BinaryTree *tree, int data, long parentId, enum SearchType searchType);
-void addNodeFirst(BinaryTree *tree, int data, enum SearchType searchType);
 void removeNode(BinaryTree *tree, unsigned long id);
 void clearBinaryTree(BinaryTree *tree, enum SearchType searchType);
 TreeNode *getNode(BinaryTree *tree, unsigned long id, enum SearchType searchType);
@@ -118,13 +117,6 @@ void addNode(BinaryTree *tree, int data, long parentId, enum SearchType searchTy
     // Error msg
     printf("\n On void addNode(BinaryTree* tree, int data, unsigned long parentId, SearchType searchType): \n");
     printf("Could not add newNode %p of data %d to parent %p.", newNode, data, parent);
-}
-
-//Adds a new node to the tree with a specified search algorithm.
-// differently from addNode(*,*,*,*), addNodeFirst will add the node to the
-// highest available spot in the binary tree structure.
-void addNodeFirst(BinaryTree* tree, int data, enum SearchType searchType){
-
 }
 
 //Performs node lookup for a specific ID. Default algorithm is Depth First Search (Pre-order)
