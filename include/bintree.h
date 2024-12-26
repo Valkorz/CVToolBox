@@ -2,6 +2,7 @@
 #define BINTREE_H
 #include <stdlib.h>
 #include <stdio.h>
+#include "queue.h"
 
 // Implements a non-linear data structure where each node has at most two children.
 /* 
@@ -18,7 +19,8 @@ enum SearchType
     DEPTH_FIRST_INORDER,
     DEPTH_FIRST_POSTORDER,
     LEVEL_ORDER,
-    LEVEL_ORDER_REVERSE
+    LEVEL_ORDER_REVERSE,
+    BREADTH_FIRST
 };
 
 //Tree node that can point to two child nodes, hold data and have a unique ID
