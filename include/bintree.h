@@ -2,7 +2,6 @@
 #define BINTREE_H
 #include <stdlib.h>
 #include <stdio.h>
-#include "queue.h"
 
 // Implements a non-linear data structure where each node has at most two children.
 /* 
@@ -10,6 +9,7 @@
     - implement functions to search nodes based on specific parameters
     - implement functionality to visually represent nodes
     - implement function to clear tree memory.
+    - Implement queue for TreeNodes
 */
 
 //Search algorithm
@@ -39,6 +39,12 @@ typedef struct BinaryTree
     TreeNode *root;
 } BinaryTree;
 
+//Queue struct similar to queue.h for Node queue functionality
+typedef struct NodeQueue{
+    TreeNode *items;
+    int length;
+}NodeQueue;
+
 // Functions
 void newTree(BinaryTree **binaryTree, int rootData);
 void addNode(BinaryTree *tree, int data, long parentId, enum SearchType searchType);
@@ -48,13 +54,19 @@ TreeNode *getNode(BinaryTree *tree, unsigned long id, enum SearchType searchType
 TreeNode *depthFirst_preorder(BinaryTree *tree, long targetId);
 TreeNode *depthFirst_inorder(BinaryTree *tree);
 TreeNode *depthFirst_postorder(BinaryTree *tree);
+TreeNode *breadthFirst(BinaryTree* tree, long targetId);
 TreeNode **newStack(unsigned int size);
+NodeQueue *newNQueue();
 void push(TreeNode **stack, TreeNode *node, unsigned int size);
 TreeNode *pop(TreeNode **stack, unsigned int size);
+void nodeEnq(NodeQueue *queue, TreeNode* node);
+TreeNode *nodeDeq(NodeQueue* queue);
+void freeNQueue(NodeQueue* queue);
 int isEmpty(TreeNode **stack, unsigned int size);
 int entries(TreeNode **stack, unsigned int size);
 void printStack(TreeNode** stack, unsigned int size);
 void printTree(TreeNode* rootNode, int space);
+void printNQueue(NodeQueue* queue);
 
 //Gets address of BinaryTree pointer, allocates memory and adds a new Root node.
 void newTree(BinaryTree **binaryTree, int rootData)
@@ -128,6 +140,7 @@ TreeNode *getNode(BinaryTree *tree, unsigned long id, enum SearchType searchType
     case DEPTH_FIRST_POSTORDER:
     case LEVEL_ORDER:
     case LEVEL_ORDER_REVERSE:
+    case BREADTH_FIRST:
         break;
     default:
         return depthFirst_preorder(tree, id);
@@ -206,6 +219,32 @@ TreeNode *depthFirst_postorder(BinaryTree *tree)
     // TODO
 }
 
+//Searches for the Node with id 'targetId' using Breadth-First traversal.
+//Set targetId to (-1) to return first node found with any NULL children.
+TreeNode *breadthFirst(BinaryTree *tree, long targetId){
+
+}
+
+
+//Prints the whole tree recursively and visually.
+void printTree(TreeNode* node, int space){
+    if(node == NULL) return;
+
+    //Increase indentation gap for each level
+    space += 10;
+
+    printTree(node->right, space);
+    printf("\n");
+    for(int i = 0; i < space; i++)
+        printf(" ");
+    printf("%d\n", node->data);
+    printTree(node->left, space);
+}
+
+//DATA STRUCTURE IMPLEMENTATION
+//NODE STACK
+
+//Allocates memory for new stack
 TreeNode **newStack(unsigned int size)
 {
     TreeNode **stack = (TreeNode **)malloc(sizeof(TreeNode *) * size);
@@ -297,19 +336,36 @@ void printStack(TreeNode** stack, unsigned int size){
     }
 }
 
-//Prints the whole tree recursively and visually.
-void printTree(TreeNode* node, int space){
-    if(node == NULL) return;
 
-    //Increase indentation gap for each level
-    space += 10;
+//NODE QUEUE
 
-    printTree(node->right, space);
-    printf("\n");
-    for(int i = 0; i < space; i++)
-        printf(" ");
-    printf("%d\n", node->data);
-    printTree(node->left, space);
+//Initialize new NodeQueue
+NodeQueue *newNQueue()
+{
+    NodeQueue *queue = (NodeQueue*)malloc(sizeof(NodeQueue));
+    queue->length = 0;
+    queue->items = (TreeNode*)malloc(sizeof(TreeNode));
+
+    return queue;
 }
+
+//Adds a node to the back of the queue
+void nodeEnq(NodeQueue* queue, TreeNode* item)
+{
+
+}
+
+//Returns last (front-most) node in the queue
+TreeNode* nodeDeq(NodeQueue* queue)
+{
+
+}
+
+//Frees queue memory and deletes instance.
+void freeNQueue(NodeQueue* queue)
+{
+
+}
+
 
 #endif

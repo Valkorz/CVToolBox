@@ -1,0 +1,5 @@
+TODO:
+
+-> Rewrite perceptronTest.C
+-> Document percepron in a markdown file
+-> fine-tune perceptron for better guesses

@@ -25,7 +25,7 @@
             "type": "shell",
             "command": "gcc",
             "args": [
-                "-I./include",
+                "-I./include ./bin",
                 "-g",
                 "${file}",
                 "-o",
