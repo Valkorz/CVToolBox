@@ -91,18 +91,18 @@ void removeEntry(HashMap* hashMap, char* key){
 }
 
 //Returns a pointer to the value defined by the key in the hashmap
-void get(HashMap* hashMap, char* key, char* target){
+char* get(HashMap* hashMap, char* key){
     int i = 0;
     Hash* currentHash = hashMap->map + i;
     for(i = 0; i < hashMap->size; i++){
         printf("\n Reading hash: %p...", currentHash);
         currentHash = hashMap->map + i;
         if(currentHash->key == key){
-            target = currentHash->value;
+            return currentHash->value;
         }
     }
     fprintf(stderr, "\nKey %s not found in %p.\n", key, hashMap);
-    target = NULL;
+    return NULL;
 }
 
 void printAll(HashMap* hashMap){
