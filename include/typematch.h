@@ -106,7 +106,6 @@ char* strcut(const char* _Str, int _Count){
 
         *(buffer + i - _Count) = *(_Str + i);
     }
-
     newStr = (char*)malloc(sizeof(char) * (len - _Count));
 
     for(c = 0; c < i - _Count; c++){
