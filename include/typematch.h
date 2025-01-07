@@ -100,21 +100,28 @@ char* strcut(const char* _Str, int _Count){
     //Characters are stored in the buffer, which are then transferred 
     //to newStr.
     char* newStr, *buffer = (char*)malloc(sizeof(char) * len);
+    // printf("\n buffer ->");
 
     for(i = 0; i < len; i++){
         if(i < _Count) continue;
 
         *(buffer + i - _Count) = *(_Str + i);
+        // printf("%c", *(buffer + i - _Count));
     }
     newStr = (char*)malloc(sizeof(char) * (len - _Count));
 
+    // printf("\n allocated new string: %p with size %d\n Passing to buffer->", newStr, (sizeof(char) * (len - _Count)));
+
     for(c = 0; c < i - _Count; c++){
         *(newStr + c) = *(buffer + c);
+        // printf("%c", *(newStr + c));
     }
 
-    *(newStr + i - _Count) = '\0'; 
+    // printf("Null terminating: %d on size %d", i - _Count, len - _Count);
+    *(newStr + i - _Count - 1) = '\0'; 
 
     free(buffer);
+    // printf("\n newstr: %s", newStr);
     return newStr;
 }
 
