@@ -5,12 +5,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define FALSE 0
+#define TRUE 1
+
 int stringToInt(char* str);
 float stringToFloat(char* str);
 double stringToDouble(char* str);
 int stringToBool(char* str);
-char* strchr_until(const char* _Str, int _Val);
+char* strchr_until(const char* _Str, int _Val, int _endLine);
 char* strcut(const char* _Str, int _Count);
+char** strsplit(const char* _Str, char _Sep, int *_Len);
 
 int stringToInt(char* str){
     int i, len = strlen(str);
@@ -35,7 +39,7 @@ float stringToFloat(char* str){
 
     //Split the fraction into whole and decimal
     char* float_part = strcut(strchr(str, '.'), 1);
-    char* int_part = strchr_until(str, '.');
+    char* int_part = strchr_until(str, '.', FALSE);
 
     int result_partial_int = stringToInt(int_part);
 
@@ -61,17 +65,17 @@ int stringToBool(char* str){
 }
 
 //Reads string until specified character is found. Returns resulting string.
-char* strchr_until(const char* _Str, int _Val)
+//if _endLine == 1, reading will be halted if the line ends (if the newLine char is found).
+char* strchr_until(const char* _Str, int _Val, int _endLine)
 {
     int i, c;
     char* newStr, *buffer = (char*)malloc(sizeof(char) * strlen(_Str));
     for(i = 0; i < strlen(_Str); i++){
         char current = *(_Str + i);
-        if(current != (char)_Val){
-            *(buffer + i) = current;
-            // printf("\n %d: Added %c to buffer because it isn't equal to %c.", i, current, (char)_Val);
-        }
-        else break;
+        if(current == (char)_Val || current == '\0' || (current == '\n' && _endLine == TRUE))
+            break;
+
+        *(buffer + i) = current;
     }
 
     newStr = (char*)malloc(sizeof(char) * (i + i));
@@ -124,5 +128,38 @@ char* strcut(const char* _Str, int _Count){
     // printf("\n newstr: %s", newStr);
     return newStr;
 }
+
+//Splits a string into an array of strings using a separator. For example:
+//Separates "bananas,apples,oranges" into char** pointer, using ',' as a 
+//separator.
+//len is the length of the returning array, passed as a pointer to be modified.
+char** strsplit(const char* _Str, char _Sep, int *_Len){
+    int elements = 1, i, offset = 0;
+
+    //Count number of elements
+    for(i = 0; i < strlen(_Str) && *(_Str + i) != '\0'; i++){
+        if(*(_Str + i) == _Sep) elements++;
+    }
+
+    char** result_str = (char**)malloc(sizeof(char*) * elements);
+
+    //Separate for each element
+    for(i = 0; i < elements; i++){
+        char* substr = strcut(_Str, offset);
+        char* target = strchr_until(substr, _Sep, TRUE);
+        // printf("\n substr: %s, target: %s", substr, target);
+
+        char* res = (char*)malloc(sizeof(char) * strlen(target) + 1);
+        res = strcpy(res, target);
+        *(result_str + i) = res;
+        offset += strlen(target) + 1;
+
+        // printf("\n Split for %d into: %s. Offset: %d", i, *(result_str + i), offset);
+    }
+
+    if(_Len != NULL) *_Len = elements;
+    return result_str;
+}
+
 
 #endif
