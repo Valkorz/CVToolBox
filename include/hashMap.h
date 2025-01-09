@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
+//KeyValuePair
 typedef struct Hash{
     char* key;
     char* value;
@@ -16,8 +17,11 @@ typedef struct HashMap{
 }HashMap;
 
 //Initialize hashmap with default values
-void createHashMap(HashMap* hashMap){
+HashMap* createHashMap(){
+    HashMap* hashMap = (HashMap*)malloc(sizeof(HashMap));
     Hash* newMap = (Hash*)malloc(sizeof(Hash) * DEFAULT_START_SIZE);
+
+    // printf("\n Memory allocated for hashMap: hashMap: %p , hash Array: %p", hashMap, newMap);
 
     //Loop to set all hashes to null, just to make sure.
     int i = 0;
@@ -28,31 +32,48 @@ void createHashMap(HashMap* hashMap){
     hashMap->map = newMap;
     hashMap->size = DEFAULT_START_SIZE;
 
-    printf("\n Created hashmap %p with size %i and map %p. \n",hashMap, DEFAULT_START_SIZE, newMap);
+
+    if(hashMap == NULL || newMap == NULL){
+        printf("\n Error while allocating memory for hashmap. Exiting function call.");
+        free(hashMap);
+        free(newMap);
+        return NULL;
+    }
+
+    return hashMap;
+    // printf("\n Created hashmap %p with size %i and map %p. \n",hashMap, DEFAULT_START_SIZE, newMap);
 }
 
 //adds or modifies a value into the hash map with a specified key.
 void add(HashMap* hashMap, char* _key, char* value){
-    printf("\nAdding entry '%s':'%p' to %p", _key, value, hashMap);
+    // printf("\nAdding entry '%s':'%p' to %p", _key, value, hashMap);
+
+
+    //Will modify the 'value' and 'key' properties inside the array of hashes (KeyValuePairs) if:
+    //The _key matches an existing key or if there is a hash with a NULL key. The new value will
+    //replace whatever was there before.
 
     int i = 0;
     Hash* currentHash = NULL;
     for(i = 0;i < hashMap->size; i++){
         currentHash = hashMap->map + i; 
-        printf("\n current key: %s", currentHash->key);
+        // printf("\n current key: %s", currentHash->key);
         if(currentHash->key == NULL){
             currentHash->value = strdup(value);
             currentHash->key = strdup(_key);
-            printf("\n Set key %s to %p in hash: %p. depth: %d", _key, value, currentHash, i);
+            // printf("\n (HashMap: %p) Set key %s to %s in hash: %p. depth: %d", hashMap, currentHash->key, currentHash->value, currentHash, i);
             return;
         }
-        printf("\n is %s equal to %s? %d", currentHash->key, _key, strcmp(currentHash->key, _key));
+        // printf("\n is %s equal to %s? %d", currentHash->key, _key, strcmp(currentHash->key, _key));
         if(strcmp(currentHash->key, _key) == 0){
             currentHash->value = strdup(value);
-            printf("\n Modified key %s to %p in hash: %p. depth: %d", currentHash->key, value, currentHash, i);
+            // printf("\n Modified key %s to %p in hash: %p. depth: %d", currentHash->key, value, currentHash, i);
             return;
         }
     }
+
+    //If no NULL keys have been found inside the hashes array, it means the hashmap is
+    //fully populated... in which case, the size is extended by DEFAULT_START_SIZE
 
     int newSize = hashMap->size + DEFAULT_START_SIZE;
     Hash* newMap = (Hash*)realloc(hashMap->map, sizeof(Hash) * newSize);
@@ -95,9 +116,9 @@ char* get(HashMap* hashMap, char* key){
     int i = 0;
     Hash* currentHash = hashMap->map + i;
     for(i = 0; i < hashMap->size; i++){
-        printf("\n Reading hash: %p...", currentHash);
+        // printf("\n Reading hash: %p of key %s...", currentHash, currentHash->key);
         currentHash = hashMap->map + i;
-        if(currentHash->key == key){
+        if(strcmp(currentHash->key, key) == 0){
             return currentHash->value;
         }
     }
@@ -116,6 +137,7 @@ void printAll(HashMap* hashMap){
 
 void clearMap(HashMap* hashMap){
     free(hashMap->map);
+    free(hashMap);
 }
 
 
