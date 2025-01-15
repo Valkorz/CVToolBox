@@ -45,6 +45,10 @@ HashMap* createHashMap(){
 
 //adds or modifies a value into the hash map with a specified key.
 void add(HashMap* hashMap, char* _key, char* value){
+    if(hashMap == NULL){
+        printf("\n The provided hashmap is NULL! Exiting function...");
+        return NULL;
+    }
     // printf("\nAdding entry '%s':'%p' to %p", _key, value, hashMap);
 
 
@@ -96,6 +100,11 @@ void add(HashMap* hashMap, char* _key, char* value){
 
 //Removes a specified keyvalue from the hashmap. Throws an error if key is not found.
 void removeEntry(HashMap* hashMap, char* key){
+    if(hashMap == NULL){
+        printf("\n The provided hashmap is NULL! Exiting function...");
+        return NULL;
+    }
+
     int i = 0;
     Hash* currentHash = hashMap->map + i;
 
@@ -112,6 +121,11 @@ void removeEntry(HashMap* hashMap, char* key){
 
 //Returns a pointer to the value defined by the key in the hashmap
 char* get(HashMap* hashMap, char* key){
+    if(hashMap == NULL){
+        printf("\n The provided hashmap is NULL! Exiting function...");
+        return NULL;
+    }
+
     int i = 0;
     Hash* currentHash = hashMap->map + i;
     for(i = 0; i < hashMap->size; i++){
