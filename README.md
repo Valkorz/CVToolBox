@@ -1,9 +1,11 @@
 # CVToolBox
 
-Computer Vision ToolBox: a repository containing every implementation relative to Artificial Inteligence, in the C programming language. The contents in this project include (but are not limited to): 
+Computer Vision ToolBox: a repository containing every implementation relative to Artificial Inteligence, in the C programming language. The finished state of the project should include: 
 - Different data structures (trees, nodes, lists, hashmaps, queues);
 - Mathematical functions targeted towards data conversion and AI statistics;
 - Different AI algorithms (node networks, probability, supervised learning, non-supervised learning, reinforcement learning, semi-supervised);
+
+*Please note that this is a work in progress: not all features have been promptly added.
 
 ## Why C?
 
