@@ -1,15 +1,14 @@
 #ifndef HASHMAP_H
-#define HASMAP_H
+#define HASHMAP_H
 #define DEFAULT_START_SIZE 10
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-//KeyValuePair
 typedef struct Hash{
     char* key;
     char* value;
-} Hash;
+}Hash;
 
 typedef struct HashMap{
     Hash* map;
