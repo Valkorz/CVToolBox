@@ -1,21 +1,14 @@
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
-#include <stdlib.h>
+#include "llist.h"
+#include "tmatch.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /*
-    |||| LINKED LIST |||
-
+    THIS CODE IS OLD AND *NEEDS* TO BE REWRITTEN. SYNTAX IS BAD AND USES
+    INCORRECT POINTER TYPE CONVERSION (WHICH CAN LEAD TO DATA LOSS).
+    still works tho
 */
-typedef struct Node{
-    void *data;
-    struct Node *next;
-} Node;
-
-// Holds root node
-typedef struct LinkedList{
-    Node *head;
-} LinkedList;
 
 //Use this to initialize the head node in the Linked List
 Node* createNode(void* data){
@@ -86,5 +79,3 @@ void clear(LinkedList* linkedList){
 
     linkedList->head = NULL;
 }
-
-#endif

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "include/csv.h"
-#include "include/typematch.h"
-#include "include/hashMap.h"
+#include "include/tmatch.h"
+#include "include/hmap.h"
 
 /*
     This file presents an example on how to use the csv.h header to convert data to and from .csv files.

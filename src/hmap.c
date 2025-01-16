@@ -1,20 +1,8 @@
-#ifndef HASHMAP_H
-#define HASHMAP_H
-#define DEFAULT_START_SIZE 10
-#include <stdlib.h>
+#include "hmap.h"
+#include "tmatch.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
-typedef struct Hash{
-    char* key;
-    char* value;
-}Hash;
-
-typedef struct HashMap{
-    Hash* map;
-    int size;
-    int count;
-}HashMap;
 
 //Initialize hashmap with default values
 HashMap* createHashMap(){
@@ -170,6 +158,3 @@ void clearMap(HashMap* hashMap){
     free(hashMap);
 }
 
-
-
-#endif
