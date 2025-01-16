@@ -13,6 +13,7 @@ typedef struct Hash{
 typedef struct HashMap{
     Hash* map;
     int size;
+    int count;
 }HashMap;
 
 //Initialize hashmap with default values
@@ -30,6 +31,7 @@ HashMap* createHashMap(){
     }
     hashMap->map = newMap;
     hashMap->size = DEFAULT_START_SIZE;
+    hashMap->count = 0;
 
 
     if(hashMap == NULL || newMap == NULL){
@@ -47,7 +49,7 @@ HashMap* createHashMap(){
 void add(HashMap* hashMap, char* _key, char* value){
     if(hashMap == NULL){
         printf("\n The provided hashmap is NULL! Exiting function...");
-        return NULL;
+        return;
     }
     // printf("\nAdding entry '%s':'%p' to %p", _key, value, hashMap);
 
@@ -65,6 +67,7 @@ void add(HashMap* hashMap, char* _key, char* value){
             currentHash->value = strdup(value);
             currentHash->key = strdup(_key);
             // printf("\n (HashMap: %p) Set key %s to %s in hash: %p. depth: %d", hashMap, currentHash->key, currentHash->value, currentHash, i);
+            hashMap->count++;
             return;
         }
         // printf("\n is %s equal to %s? %d", currentHash->key, _key, strcmp(currentHash->key, _key));
@@ -102,7 +105,7 @@ void add(HashMap* hashMap, char* _key, char* value){
 void removeEntry(HashMap* hashMap, char* key){
     if(hashMap == NULL){
         printf("\n The provided hashmap is NULL! Exiting function...");
-        return NULL;
+        return;
     }
 
     int i = 0;
@@ -113,6 +116,7 @@ void removeEntry(HashMap* hashMap, char* key){
         if(currentHash->key == key){
             currentHash->value = NULL;
             currentHash->key = NULL;
+            hashMap->count--;
             return;
         }
     }
@@ -139,6 +143,19 @@ char* get(HashMap* hashMap, char* key){
     return NULL;
 }
 
+char** get_keys(HashMap* hashMap){
+    printf("\n KEYS: ");
+    char** keylist = (char**)malloc(sizeof(char*) * hashMap->count);
+    int i;
+    for(i = 0; i < hashMap->count; i++){
+        printf(" %s ", (*(hashMap->map + i)).key);
+        *(keylist + i) = strdup((*(hashMap->map + i)).key);
+    }
+
+    printf("\n Keylist: %p", keylist);
+    return keylist;
+}
+
 void printAll(HashMap* hashMap){
     int i = 0;
     Hash* currentHash = hashMap->map + i;
@@ -152,6 +169,7 @@ void clearMap(HashMap* hashMap){
     free(hashMap->map);
     free(hashMap);
 }
+
 
 
 #endif
