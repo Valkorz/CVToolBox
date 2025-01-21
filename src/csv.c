@@ -7,17 +7,19 @@
 //(for size tracking)
 DataFrame* df_load(const char* fname){
     FILE* fptr = fopen(fname,"r");
-    char ch, buffer[MAX_LENGTH], **headers = NULL;
-    int row = 0, buffer_index = 0, hash_index = 0, hash_size = 1, elements = 1, offset = 0, i;
-    unsigned long hcount = 0, len = 0;
-    DataFrame* _df = (DataFrame*)malloc(sizeof(DataFrame));
-    HashMap** df = (HashMap**)malloc(sizeof(HashMap*) * hash_size);
 
     //Quit function if file opening fails
     if(fptr == NULL){
         printf("\n ERROR: %s not found.", fname);
         return NULL;
     }
+
+    char ch, buffer[MAX_LENGTH], **headers = NULL;
+    int row = 0, buffer_index = 0, hash_index = 0, hash_size = 1, elements = 1, offset = 0, i;
+    unsigned long hcount = 0, len = 0;
+    DataFrame* _df = (DataFrame*)malloc(sizeof(DataFrame));
+    HashMap** df = (HashMap**)malloc(sizeof(HashMap*) * hash_size);
+
 
     clearBuffer(MAX_LENGTH, buffer); //Initialize buffer with line endings ('\0').
 
@@ -131,23 +133,51 @@ DataFrame* df_new(){
 
 //Appends data to the DataFrame, allocates a new hashmap array if NULL
 void df_append(DataFrame* df, HashMap* data){
+    if(df == NULL || data == NULL) return;
+    //Create a copy of the data and free old pointer
+    HashMap* _data = (HashMap*)malloc(sizeof(HashMap));
+    _data->count = data->count;
+    _data->size = data->size;
+    _data->map = (Hash*)malloc(sizeof(Hash) * data->size);
+
+    //Copy the contents of the map array
+    memcpy(_data->map, data->map, sizeof(Hash) * data->size);
+    memcpy_hash(data->map, _data->map, data->size);
+    
+
     if(df->dataFrame == NULL){
         df->dataFrame = (HashMap**)malloc(sizeof(HashMap*));
         df->length = 1;
-        df->headCount = (unsigned long)data->count;
-        *(df->dataFrame) = data;
+        df->headCount = (unsigned long)_data->count;
+        *(df->dataFrame) = _data;
 
         printf("\n HashMap is NULL. Allocated new array %p with length %lu and headCount %lu", df->dataFrame, df->length, df->headCount);
         printf("\n Added: ");
-        printAll(data);
+        printAll(_data);
     }
     else{
         df->length++;
         df->dataFrame = (HashMap**)realloc(df->dataFrame, sizeof(HashMap*) * df->length);
-        *(df->dataFrame + df->length - 1) = data;
+        *(df->dataFrame + df->length - 1) = _data;
 
         printf("\n Added: ");
         printAll(*(df->dataFrame + df->length - 1));
+    }
+}
+
+void df_print(DataFrame* df){
+    printf("\n");
+    int i, e;
+    for(i = 0; i < df->headCount; i++){
+        printf(" %s ,", ((*(df->dataFrame))->map + i)->key);
+    }
+    printf("\n");
+
+    for(i = 0; i < df->length; i++){
+        for(e = 0; e < df->headCount; e++){
+            printf(" %s ,", ((*(df->dataFrame + i))->map + e)->value);
+        }
+        printf("\n");
     }
 }
 
@@ -157,11 +187,17 @@ void df_mean(DataFrame* df, const char* header){
 }
 
 void df_clear(DataFrame* df){
+    if(df == NULL)return;
+
     int i;
     unsigned long size = df->length;
     HashMap** _df = df->dataFrame;
+
     for(i = 0; i < size; i++){
-        clearMap(*(_df + i));
+        if(*(_df + i) != NULL){
+            // printf("\n Current hashmap: %p (%d/%lu)", *(_df + i), i, size);
+            clearMap(*(_df + i));
+        }   
     }
 
     free(_df);

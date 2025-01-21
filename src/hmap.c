@@ -153,8 +153,30 @@ void printAll(HashMap* hashMap){
     }
 }
 
+//Copies over every element of the hash
+void memcpy_hash(Hash* _Src, Hash* _Dst, int size){
+    int i;
+    for(i = 0; i < size; i++){
+        (*(_Dst + i)).key = strdup((*(_Src + i)).key);
+        (*(_Dst + i)).value = strdup((*(_Src + i)).value);
+    }
+}
+
 void clearMap(HashMap* hashMap){
-    free(hashMap->map);
+    if(hashMap == NULL) return;
+
+    int i;
+    for(i = 0; i < hashMap->size; i++){
+        if((*(hashMap->map + i)).key != NULL){
+            // printf("\n Clearing current hash: %s:%s", (*(hashMap->map + i)).key, (*(hashMap->map + i)).value);
+            free((*(hashMap->map + i)).key);
+            free((*(hashMap->map + i)).value);
+        }
+    }
+
+    free((hashMap->map));
+    // printf("\n clearingMap: %p", hashMap);
+    // printf("\n %p is null? %d", hashMap, (hashMap == NULL)? 1 : 0);
     free(hashMap);
 }
 

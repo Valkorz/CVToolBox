@@ -9,29 +9,49 @@
     Similar to Python's pandas library, it uses dataFrames, which are basically an array of HashMaps.
 */
 
-int main(){
+int main()
+{
+    // Loading a DataFrame from a .csv file
+    DataFrame *df = df_load("..\\examples\\data\\csv\\random_temps.csv");
 
-    /*
-    DataFrame* df = df_load("lib\\data\\generated\\random\\random_temps.csv");
-    printf("\n Rain on index 2 = %s", get(df->dataFrame[2], "Rain"));
-    system("pause");
+    //Print loaded data if it has been successful.
+    if (df != NULL)
+    {
+        printf("\n Loaded data: ");
+        df_print(df); // print whole DataFrame (formatted as such)
+        system("pause");
+        system("cls");
+        df_clear(df);
+    }
 
-    dfClear(&df);
-    printf("Cleared dataframe."); */
+    // Create a new DataFrame manually
 
-    DataFrame* df = df_new();
-    HashMap* data = createHashMap();
+    df = df_new();
+    HashMap *data = createHashMap();
+
+    // Add some placeholder data
     add(data, "test", "0");
     add(data, "test2", "1");
     add(data, "test3", "2");
     add(data, "test4", "3");
+
+    // Append the same data twice for two rows (containing the same values)
     df_append(df, data);
     df_append(df, data);
-    char** keys = get_keys(data);
-    printf("\n keys return: %s, %s", keys[0],keys[1]);
+
+    // Free the data as it will no longer be used
+    //(The data is copied when  appended to the DataFrame)
+    clearMap(data);
+
+    // Saves the DataFrame to a separate file (in the same directory as the executable)
     printf("\n saving... ");
+    df_print(df);
     df_save(df, "data.csv");
+    system("pause");
+    system("cls");
     df_clear(df);
+
+    printf("\n Everything cleared! Press ENTER to close application...");
     system("pause");
 
     return EXIT_SUCCESS;

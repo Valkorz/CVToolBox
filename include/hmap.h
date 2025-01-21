@@ -17,6 +17,7 @@ typedef struct HashMap{
 }HashMap;
 
 HashMap* createHashMap();
+void memcpy_hash(Hash* _Src, Hash* _Dst, int size);
 void add(HashMap* hashMap, char* _key, char* value);
 void removeEntry(HashMap* hashMap, char* key);
 char* get(HashMap* hashMap, char* key);
