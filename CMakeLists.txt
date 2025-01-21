@@ -5,7 +5,7 @@ project(CVToolBox)
 set(CMAKE_C_STANDARD 11)
 
 # Include directories
-include_directories(include)
+include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Source files
 file(GLOB SOURCES "src/*.c")

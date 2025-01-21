@@ -5,7 +5,7 @@ TODO:
 -> Rewrite perceptronTest.C
 -> Document percepron in a markdown file
 -> fine-tune perceptron for better guesses
--> fix the clear function for dataframes
+-> Figure out how to make headers globally available instead of using relative paths
 
 MODELS TO BE IMPLEMENTED:
 
