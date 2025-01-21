@@ -156,12 +156,12 @@ void df_mean(DataFrame* df, const char* header){
     //TODO
 }
 
-void dfClear(DataFrame** df){
+void df_clear(DataFrame* df){
     int i;
-    unsigned long size = (*df)->length;
-    HashMap** _df = (*df)->dataFrame;
+    unsigned long size = df->length;
+    HashMap** _df = df->dataFrame;
     for(i = 0; i < size; i++){
-        free(*(_df + i));
+        clearMap(*(_df + i));
     }
 
     free(_df);

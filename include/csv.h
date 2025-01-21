@@ -39,5 +39,6 @@ void df_save(DataFrame* df, const char* fname);
 DataFrame* df_new();
 void df_append(DataFrame* df, HashMap* data);
 void df_mean(DataFrame* df, const char* header);
+void df_clear(DataFrame* df);
 
 #endif

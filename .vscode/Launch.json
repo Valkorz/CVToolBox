@@ -11,6 +11,17 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "console": true
+        },
+        {
+            "name": "Launch Debug exe",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/Debug/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "environment": [],
+            "console": true
+            
         }
     ]
 }

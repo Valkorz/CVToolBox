@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\pivar\Documents\Projects\CVToolBox\CMakeFiles\df5ef6caba42660144778b8686efe972\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{741F53DA-B893-3930-AFA7-DCE8565F7A28}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

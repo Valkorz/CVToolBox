@@ -17,3 +17,29 @@ The choice was made due to the author's wish to create something entirely (or mo
 This project is predominantly for research and education, providing detailed documentation that helps the user understand the 'whys' or 'hows' of Artificial Intelligence technology, even in the low level aspect.
 
 ---
+
+## Building the project
+
+### Using CMAKE and Visual Studio Code on Windows
+
+1. **Generate Visual Studio Project Files**:
+    - Open a Command Prompt or PowerShell window.
+    - Navigate to the project's root directory and create a 'build' folder:
+        ```sh
+            mkdir build
+            cd build
+        ```
+    - Run CMake to generate Visual Studio project files:
+        ```sh
+            cmake ..
+        ```
+2. **Build the project**:
+    ```sh
+        cmake --build .
+    ```
+
+3. **Install the project (Optional)**:
+    You can also install the compiled project into a specified directory:
+    ```sh
+        cmake --install . --prefix /path/to/install
+    ```

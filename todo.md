@@ -5,8 +5,6 @@ TODO:
 -> Rewrite perceptronTest.C
 -> Document percepron in a markdown file
 -> fine-tune perceptron for better guesses
--> Add DataFrame manipulation in csv.h
--> Add saving dataframe to .csv file
 -> fix the clear function for dataframes
 
 MODELS TO BE IMPLEMENTED:

@@ -25,7 +25,7 @@
             "type": "shell",
             "command": "gcc",
             "args": [
-                "-I./include ./lib",
+                "-I./include",
                 "-g",
                 "${file}",
                 "-o",
@@ -39,6 +39,23 @@
                 "$gcc"
             ],
             "detail": "Task for compiling C files using MinGW"
+        },
+        {
+            "label": "CMake Build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "."
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "Task for building the project using CMake"
         },
         {
             "type": "cppbuild",
@@ -57,7 +74,10 @@
             "problemMatcher": [
                 "$gcc"
             ],
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
             "detail": "compiler: C:\\MinGW\\bin\\gcc.exe"
         }
     ]

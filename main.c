@@ -31,6 +31,7 @@ int main(){
     printf("\n keys return: %s, %s", keys[0],keys[1]);
     printf("\n saving... ");
     df_save(df, "data.csv");
+    df_clear(df);
     system("pause");
 
     return EXIT_SUCCESS;
