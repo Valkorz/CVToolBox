@@ -24,14 +24,9 @@ This project is predominantly for research and education, providing detailed doc
 
 1. **Generate Visual Studio Project Files**:
     - Open a Command Prompt or PowerShell window.
-    - Navigate to the project's root directory and create a 'build' folder:
+    - Navigate to the project's root directory and create Visual Studio project files:
         ```sh
-            mkdir build
-            cd build
-        ```
-    - Run CMake to generate Visual Studio project files:
-        ```sh
-            cmake ..
+            cmake .
         ```
 2. **Build the project**:
     ```sh
