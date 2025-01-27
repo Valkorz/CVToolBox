@@ -16,6 +16,9 @@
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\llist.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\perceptron.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\queue.c">
       <Filter>Source Files</Filter>
     </ClCompile>
