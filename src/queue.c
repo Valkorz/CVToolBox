@@ -26,9 +26,7 @@ void enqueue(Queue *queue, char *item)
     if (queue->length - 1 == 0)
     {
         char **target = queue->items;
-        *target = (char *)malloc(sizeof(char *) * strlen(item));
-        *(target) = strcpy(*target, item);
-
+        *target = strdup(item);
         return;
     }
 
@@ -42,15 +40,7 @@ void enqueue(Queue *queue, char *item)
         char **previousItem = queue->items + i - 1;
         // printf("\n Found item: %p (%d) to be set to %s (%d)", currentItem, i, *previousItem, i - 1);
         *currentItem = NULL;
-        *currentItem = (char *)malloc(sizeof(char) * strlen(*previousItem));
-
-        if (*currentItem == NULL)
-        {
-            printf("\n Allocation failed!");
-            return;
-        }
-
-        *currentItem = strcpy(*currentItem, *previousItem);
+        *currentItem = strdup(*previousItem);
         *previousItem = NULL;
         // printf("\n current item is now: %s", *currentItem);
     }
@@ -58,7 +48,7 @@ void enqueue(Queue *queue, char *item)
     // printf("\n queueitems: %p", *(queue->items));
     *(queue->items) = (char *)realloc(*(queue->items), sizeof(char) * strlen(item));
     // printf("\n queue items: %p", *(queue->items));
-    *(queue->items) = strcpy(*queue->items, item);
+    *(queue->items) = strdup(item);
     // printf("\n queue items: %s", *(queue->items));
 }
 
@@ -66,15 +56,19 @@ void enqueue(Queue *queue, char *item)
 // After the item is located, the queue's size in the memory is decreased and the element is deleted.
 char *dequeue(Queue *queue)
 {
+    // printf("\n Dequeueing item from %p", queue);
     if (queue->length <= 0)
     {
         printf("\n Queue is empty.");
         return NULL;
     }
 
-    char *last = (*(queue->items + queue->length - 1));
-    char *item = (char *)malloc(sizeof(char) * strlen(last));
-    item = strcpy(item, last);
+    // printf("\n First item: %s (%p)", *(queue->items), *(queue->items));
+    char *last = (*(queue->items + (queue->length) - 1));
+    // printf("\n Last item: %s (%p)", last, last);
+    char *item = strdup(last);
+
+    // printf("\n copied to item: %s (%p)", item, item);
     free(last);
     printf("\n Dequeued item: %s", item);
 
@@ -97,7 +91,7 @@ void printQueue(Queue *queue)
 
     for (int i = 0; i < queue->length; i++)
     {
-        printf(" %s ", *(queue->items + i));
+        printf(" %s (%p)", *(queue->items + i), *(queue->items + i));
         printf(" - ");
     }
 
@@ -111,6 +105,7 @@ void freeQueue(Queue *queue)
     {
         free(*(queue->items + i));
     }
+
     free(queue->items);
     free(queue);
 }

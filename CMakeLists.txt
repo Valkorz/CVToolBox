@@ -18,5 +18,9 @@ install(TARGETS CVToolBox DESTINATION lib)
 install(DIRECTORY include/ DESTINATION include)
 
 # Examples
-add_executable(example examples/queueExample.c)
-target_link_libraries(example CVToolBox)
+
+#add_executable(queueExample examples/queueExample.c)
+#target_link_libraries(queueExample CVToolBox)
+
+add_executable(main main.c)
+target_link_libraries(main CVToolBox)
