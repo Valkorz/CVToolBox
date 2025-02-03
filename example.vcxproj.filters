@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\main.c">
+    <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\examples\queueExample.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{D59EE047-7D5A-32B2-8DF1-2C4DCF3733C4}</UniqueIdentifier>
+      <UniqueIdentifier>{0D8DC3E8-0FF2-33FF-9F4E-AF345BCA351E}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
