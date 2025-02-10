@@ -2,21 +2,15 @@
 #include <stdlib.h>
 #include <time.h>
 #include "perceptron.h"
-#include "tmatch.h"
 #define MAX_LENGTH 12
-#define EPOCHS 500
-#define FEATURES 6
+#define EPOCHS 400
+#define FEATURES 5
 #define LEARNING_RATE 0.5
 #define DEFAULT_FNAME "percepsave.bin"
 
 // Function to extract features from an email
 void extract_features(const char *email, double *features) {
     features[0] = strlen(email); //Get email length
-    features[1] = strcount(email, "win") + strcount(email, "prize") + strcount(email, "congratulations"); //keyword count
-    features[2] = upperRatio(email); //Ratio of uppercase words
-    features[3] = strstr(email, "!") != NULL? 1.0 : 0.0; // Check for punctuation
-    features[4] = strstr(email, "?") != NULL? 1.0 : 0.0;
-    features[5] = wordcount(email); //count amount of words
 }
 
 int main()
@@ -77,7 +71,6 @@ int main()
     percep_train(p, features, labels, MAX_LENGTH, EPOCHS);
 
     //Test the perceptron on a new message
-    system("pause");
     system("cls");
     printf("\n Type a message for the perceptron to test for scam... Type # to quit. \n");
     char msg[200];

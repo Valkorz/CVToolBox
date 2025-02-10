@@ -66,7 +66,7 @@ int percep_predict(Perceptron *p, double *inputs){
     int i;
     for(i = 0; i < p->num_inputs; i++){
         sum += *(p->weights + i) * (*(inputs + i));
-        // printf("\n Adding to sum: %f", *(p->weights + i) * (*(inputs + i)));
+        printf("\n Adding to sum: %f (%f * %f) feature: %d", *(p->weights + i) * (*(inputs + i)), *(p->weights + i), (*(inputs + i)), i);
     }
 
     // printf("\n the sum of inputs is %f. bias: %f", sum, p->bias);

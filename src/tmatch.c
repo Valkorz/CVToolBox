@@ -147,3 +147,64 @@ char** strsplit(const char* _Str, char _Sep, int *_Len){
     if(_Len != NULL) *_Len = elements;
     return result_str;
 }
+
+/// @brief Counts the number of times a reference string appears in a source string
+/// @param _StrSrc Source string
+/// @param _StrRef Reference string
+/// @return Returns the count
+int strcount(const char* _StrSrc, const char* _StrRef){
+    // printf("\n starting count... ");
+    int ref_len = strlen(_StrRef);
+    int src_len = strlen(_StrSrc);
+    int i, count = 0;
+    const char* substr = strupr(strdup(_StrSrc));
+
+    for(i = 0; i < src_len; i++){
+        char* sub = strstr(substr, strupr(strdup(_StrRef)));
+        // printf("\n sub %d: %s, count: %d", i, sub, count);
+
+        if(sub != NULL){
+            count++;
+            substr = strdup(strstr(substr, strupr(strdup(_StrRef))));
+            substr += ref_len;
+        }
+        else break;
+    }
+
+    return count;
+}
+
+// Checks if character is uppercase.
+int isUpper(char c){
+    if(c >= 'A' && c <= 'Z'){
+        return TRUE;
+    }
+    return FALSE;
+}
+
+// Calculates the ratio of uppercase letters 
+double upperRatio(const char* _StrSrc){
+    int total = strlen(_StrSrc);
+    int uppers = 0, whitespace = 0, i;
+
+    for(i = 0; i < total; i++){
+        if(isUpper(*(_StrSrc + i)) == 1){
+            uppers++;
+        }
+
+        if(*(_StrSrc + i) == ' '){
+            whitespace++;
+        }
+    }
+
+    return (double)uppers / (double)(total - whitespace);
+}
+
+// Counts the number of words
+int wordcount(const char* _StrSrc){
+    int i, words;
+    for(i = 0, words = 0; i < strlen(_StrSrc); i++){
+        if(*(_StrSrc + i) == ' ') words++;
+    }
+    return words;
+}
