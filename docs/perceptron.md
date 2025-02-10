@@ -98,7 +98,7 @@ All of these values contribute to the equation that will determine whether an em
 
 All the properties of a perceptron (weights, bias, inputs, etc...) contribute to the final decision of whether an input is `true` or `false`, following the general formula (that can be tweaked for different results):
 
-$ y = g(w_0 + \sum_{i=1}^{m} x_i * w_i)$
+$y = g(w_0 + \sum_{i=1}^{m} x_i * w_i)$
 
 $y$ = output;
 $g(x)$ = non-linear activation function;
