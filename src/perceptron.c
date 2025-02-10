@@ -34,7 +34,7 @@ int activate(double sum){
 /// @param p the perceptron struct
 /// @param inputs the features
 /// @return the activated value for the sum of inputs multiplied by weights.
-int predict(Perceptron *p, double *inputs){
+int percep_predict(Perceptron *p, double *inputs){
     double sum = p->bias;
     int i;
     for(i = 0; i < p->num_inputs; i++){
@@ -56,12 +56,12 @@ int predict(Perceptron *p, double *inputs){
 /// @param labels the training data state (true or false)
 /// @param num_samples length of training data entries
 /// @param epochs number of training loops
-void train(Perceptron* p, double **training_inputs, int *labels, int num_samples, int epochs){
+void percep_train(Perceptron* p, double **training_inputs, int *labels, int num_samples, int epochs){
     int epoch, i;
     for(epoch = 0; epoch < epochs; epoch++){
         for(i = 0; i < num_samples; i++){
             //Will predict for each entry in the data list
-            int prediction = predict(p, *(training_inputs + i));
+            int prediction = percep_predict(p, *(training_inputs + i));
             int error = *(labels + i) - prediction;
 
             //Update weight and bias based on learning rate and error

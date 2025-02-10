@@ -30,9 +30,12 @@ typedef struct Perceptron{
 }Perceptron;
 
 Perceptron* percep_init(int num_inputs, double learning_rate);
+Perceptron* percep_load(char* fname);
 int activate(double sum);
-int predict(Perceptron *p, double* inputs);
-void train(Perceptron *p, double **training_inputs, int *labels, int num_samples, int epochs);
+int percep_predict(Perceptron *p, double* inputs);
+void percep_train(Perceptron *p, double **training_inputs, int *labels, int num_samples, int epochs);
 void percep_free(Perceptron* p);
+void percep_save(Perceptron* p, char* fname);
+
 
 #endif
