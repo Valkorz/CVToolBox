@@ -4,6 +4,7 @@ TODO:
 
 -> Document percepron in a markdown file
 -> test perceptron with csv file
+-> finish the perceptron documentation
 -> push and share on LinkedIn
 
 MODELS TO BE IMPLEMENTED:
