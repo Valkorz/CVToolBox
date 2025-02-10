@@ -3,10 +3,7 @@
 TODO:
 
 -> Document percepron in a markdown file
--> fine-tune perceptron for better guesses
--> finish documenting perceptron and rewriting perceptron.c
--> create example usage for perceptron
--> test
+-> test perceptron with csv file
 -> push and share on LinkedIn
 
 MODELS TO BE IMPLEMENTED:
