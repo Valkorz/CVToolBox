@@ -1,58 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "csv.h"
-#include "tmatch.h"
-#include "hmap.h"
+#include <time.h>
+#include "perceptron.h"
+#define MAX_LENGTH 5
+#define EPOCHS 200
+#define FEATURES 4
+#define LEARNING_RATE 0.5
 
-/*
-    This file presents an example on how to use the csv.h header to convert data to and from .csv files.
-    Similar to Python's pandas library, it uses dataFrames, which are basically an array of HashMaps.
-*/
+// Function to extract features from an email
+void extract_features(const char *email, double *features) {
+    features[0] = strstr(email, "free") != NULL ? 1.0 : 0.0;
+    features[1] = strstr(email, "win") != NULL ? 1.0 : 0.0;
+    features[2] = strlen(email);
+    features[3] = 0; // Assume 0 links for simplicity
+}
 
 int main()
 {
-    // Loading a DataFrame from a .csv file
-    DataFrame *df = df_load("..\\examples\\data\\csv\\random_temps.csv");
+    printf("\n Creating training data...");
 
-    //Print loaded data if it has been successful.
-    if (df != NULL)
+    srand(time(NULL));
+    // Create some example data to train the perceptron with
+    char** emails = (char**)malloc(sizeof(char*) * MAX_LENGTH);
+    emails[0] = "Hello! you win a prize!";
+    emails[1] = "Do you want a free chance to win a cellphone?";
+    emails[2] = "Hello, how have you been?";
+    emails[3] = "Your verification code is XXXXX";
+    emails[4] = "Enter this link to win free robux!";
+
+    // 1 = is a scam message
+    // 0 = is not a scam message
+    int* labels = (int*)malloc(sizeof(int) * MAX_LENGTH);
+    labels[0] = 1;
+    labels[1] = 1;
+    labels[2] = 0;
+    labels[3] = 0;
+    labels[4] = 1;
+
+    //Extract features for each email
+    double** features = (double**)malloc(sizeof(double*) * MAX_LENGTH);
+    for(int i = 0; i < MAX_LENGTH; i++)
     {
-        printf("\n Loaded data: ");
-        df_print(df); // print whole DataFrame (formatted as such)
-        system("pause");
-        system("cls");
-        df_clear(df);
+        features[i] = (double*)malloc(sizeof(double) * FEATURES);
+        extract_features(emails[i], features[i]);
     }
+    
+    // Create a new perceptron
+    Perceptron *p = percep_init(FEATURES, LEARNING_RATE);
 
-    // Create a new DataFrame manually
+    // Train the perceptron
+    printf("\n Training the perceptron...");
+    train(p, features, labels, MAX_LENGTH, EPOCHS);
 
-    df = df_new();
-    HashMap *data = createHashMap();
+    //Test the perceptron on a new message
+    char* msg_normal = "Good Morning, I hope you have a nice day!"; //Not a scam message
+    double* normal_features = (double*)malloc(sizeof(double) * MAX_LENGTH);
+    extract_features(msg_normal, normal_features);
+    char* msg_scam = "This link contains a free prize. Claim it."; //Scam message
+    double* scam_features = (double*)malloc(sizeof(double) * MAX_LENGTH);
+    extract_features(msg_scam, scam_features);
 
-    // Add some placeholder data
-    add(data, "test", "0");
-    add(data, "test2", "1");
-    add(data, "test3", "2");
-    add(data, "test4", "3");
-
-    // Append the same data twice for two rows (containing the same values)
-    df_append(df, data);
-    df_append(df, data);
-
-    // Free the data as it will no longer be used
-    //(The data is copied when  appended to the DataFrame)
-    clearMap(data);
-
-    // Saves the DataFrame to a separate file (in the same directory as the executable)
-    printf("\n saving... ");
-    df_print(df);
-    df_save(df, "data.csv");
+    printf("\n Testing the perceptron...");
+    printf("\n Message 1: %s. Is Scam: %s", msg_normal, predict(p, normal_features) == 1? "TRUE" : "FALSE");
+    printf("\n Message 2: %s. Is Scam: %s", msg_scam, predict(p, scam_features) == 1? "TRUE" : "FALSE");
+    
+    
     system("pause");
-    system("cls");
-    df_clear(df);
+    printf("\n Cleaning up...");
 
-    printf("\n Everything cleared! Press ENTER to close application...");
-    system("pause");
+    free(emails);
+    free(labels);
+
+    for(int i = 0; i < MAX_LENGTH; free(features[i]), i++);
+
+    free(features);
+    free(normal_features);
+    free(scam_features);
 
     return EXIT_SUCCESS;
 }

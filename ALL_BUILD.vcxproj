@@ -178,9 +178,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <Project>{EEEAE9EB-B245-3DC4-A317-E6E5221AE2BC}</Project>
       <Name>CVToolBox</Name>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\pivar\Documents\Projects\CVToolBox\queueExample.vcxproj">
-      <Project>{63E9B44B-7747-3CE4-B44B-00785016B207}</Project>
-      <Name>queueExample</Name>
+    <ProjectReference Include="C:\Users\pivar\Documents\Projects\CVToolBox\main.vcxproj">
+      <Project>{F5ED8278-AA51-3849-95E0-A37C5EB4AEE6}</Project>
+      <Name>main</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

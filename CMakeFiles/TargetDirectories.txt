@@ -1,5 +1,5 @@
 C:/Users/pivar/Documents/Projects/CVToolBox/CMakeFiles/CVToolBox.dir
-C:/Users/pivar/Documents/Projects/CVToolBox/CMakeFiles/queueExample.dir
+C:/Users/pivar/Documents/Projects/CVToolBox/CMakeFiles/main.dir
 C:/Users/pivar/Documents/Projects/CVToolBox/CMakeFiles/INSTALL.dir
 C:/Users/pivar/Documents/Projects/CVToolBox/CMakeFiles/ALL_BUILD.dir
 C:/Users/pivar/Documents/Projects/CVToolBox/CMakeFiles/ZERO_CHECK.dir

@@ -2,10 +2,12 @@
 
 TODO:
 
--> Rewrite perceptronTest.C
 -> Document percepron in a markdown file
 -> fine-tune perceptron for better guesses
--> Figure out how to make headers globally available instead of using relative paths
+-> finish documenting perceptron and rewriting perceptron.c
+-> create example usage for perceptron
+-> test
+-> push and share on LinkedIn
 
 MODELS TO BE IMPLEMENTED:
 
