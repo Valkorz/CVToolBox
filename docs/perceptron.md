@@ -199,7 +199,7 @@ int main()
 
     // Train the perceptron
     printf("\n Training the perceptron...");
-    train(p, features, labels, MAX_LENGTH, EPOCHS);
+    percep_train(p, features, labels, MAX_LENGTH, EPOCHS);
 
     //Test the perceptron on a new message
     char* msg_normal = "Good Morning, I hope you have a nice day!"; //Not a scam message
@@ -210,8 +210,8 @@ int main()
     extract_features(msg_scam, scam_features);
 
     printf("\n Testing the perceptron...");
-    printf("\n Message 1: %s. Is Scam: %s", msg_normal, predict(p, normal_features) == 1? "TRUE" : "FALSE");
-    printf("\n Message 2: %s. Is Scam: %s", msg_scam, predict(p, scam_features) == 1? "TRUE" : "FALSE");
+    printf("\n Message 1: %s. Is Scam: %s", msg_normal, percep_predict(p, normal_features) == 1? "TRUE" : "FALSE");
+    printf("\n Message 2: %s. Is Scam: %s", msg_scam, percep_predict(p, scam_features) == 1? "TRUE" : "FALSE");
     
     
     system("pause");
@@ -225,6 +225,7 @@ int main()
     free(features);
     free(normal_features);
     free(scam_features);
+    percep_free(p);
 
     return EXIT_SUCCESS;
 }
@@ -239,3 +240,69 @@ This code organizes some sample emails and categorizes them between 'scam' and '
 
 This means that the perceptron has worked, and it is able to detect scam messages using the features checked using the `extract_features` function! 
 It is worth noting, however, that in some executions of the program, the perceptron might *not* detect the scam message, this because the random weight being applied might result in the sum being negative. Increasing the `epochs` does increase accuracy significantly during the training process.
+
+#### Saving the perceptron
+
+What if you train a big perceptron, with lots of data and thousands of epochs, wouldn't that take a while to finish? Now imagine having to do that every single execution of the program? 
+By using C's I/O library, we can instead write the entire perceptron to a binary file, so that all the information can be loaded and reused, instead of having to train a model from scratch!
+
+```c
+int percep_save(Perceptron *p, char* fname){
+    FILE *fp = fopen(fname, "wb");
+    if(!fp)
+        return EXIT_FAILURE;
+
+    //Write primitives
+    fwrite(&p->num_inputs, sizeof(int), 1, fp);
+    fwrite(&p->learning_rate, sizeof(double), 1, fp);
+    fwrite(&p->bias, sizeof(double), 1, fp);
+
+    //Write the weights array separately because the count is larger than 1
+    fwrite(p->weights, sizeof(double), p->num_inputs, fp);
+
+    fclose(fp);
+    return EXIT_SUCCESS;
+}
+```
+
+The code above opens a new file, converts all the primitives and the `weights` array to binary data, using `fwrite()`.
+
+```c
+Perceptron* percep_load(char* fname){
+    FILE* fp = fopen(fname, "rb");
+    if(!fp)
+        return NULL;
+
+    Perceptron *p = (Perceptron*)malloc(sizeof(Perceptron));
+    if(!p){
+        fclose(fp);
+        return NULL;
+    }
+
+    // Read the perceptron's primitive values
+    fread(&p->num_inputs, sizeof(int), 1, fp);
+    fread(&p->learning_rate, sizeof(double), 1, fp);
+    fread(&p->bias, sizeof(double),1 ,fp);
+
+    // Allocate memory for the weights and read them
+    p->weights = (double*)malloc(p->num_inputs * sizeof(double));
+    fread(p->weights, sizeof(double), p->num_inputs, fp);
+
+    fclose(fp);
+    return p;
+}
+```
+
+The file can be then read, and the binary data is converted back to the original types using `fread()`.
+The reading is done correctly by pointing the right variables in the right order, then the raw binary data is transferred to the appropriate memory blocks. If you were to switch the order of reading, the data would be corrupted.
+Then, the file can be loaded as follows:
+
+```c
+// Create a new perceptron
+// Load perceptron model data if it is found, otherwise initiate new instance.
+Perceptron *p = NULL;
+p = percep_load(DEFAULT_FNAME);
+if(!p){
+    p = percep_init(FEATURES, LEARNING_RATE);
+} else hasData = 1;
+```

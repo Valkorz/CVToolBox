@@ -35,7 +35,7 @@ int activate(double sum);
 int percep_predict(Perceptron *p, double* inputs);
 void percep_train(Perceptron *p, double **training_inputs, int *labels, int num_samples, int epochs);
 void percep_free(Perceptron* p);
-void percep_save(Perceptron* p, char* fname);
+int percep_save(Perceptron* p, char* fname);
 
 
 #endif

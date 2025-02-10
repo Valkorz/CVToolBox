@@ -23,6 +23,33 @@ Perceptron* percep_init(int num_inputs, double learning_rate){
     return p;
 }
 
+/// @brief Loads perceptron from a binary file
+/// @param fname the name of the file
+/// @return Returns the loaded perceptron. NULL if loading failed.
+Perceptron* percep_load(char* fname){
+    FILE* fp = fopen(fname, "rb");
+    if(!fp)
+        return NULL;
+
+    Perceptron *p = (Perceptron*)malloc(sizeof(Perceptron));
+    if(!p){
+        fclose(fp);
+        return NULL;
+    }
+
+    // Read the perceptron's primitive values
+    fread(&p->num_inputs, sizeof(int), 1, fp);
+    fread(&p->learning_rate, sizeof(double), 1, fp);
+    fread(&p->bias, sizeof(double),1 ,fp);
+
+    // Allocate memory for the weights and read them
+    p->weights = (double*)malloc(p->num_inputs * sizeof(double));
+    fread(p->weights, sizeof(double), p->num_inputs, fp);
+
+    fclose(fp);
+    return p;
+}
+
 /// @brief Determines the output of the Perceptron.
 /// @param sum the sum of the bias + all features multiplied by all weighs.
 /// @return Returns TRUE if the sum is greater or equal to zero, otherwise returns FALSE.
@@ -81,3 +108,25 @@ void percep_free(Perceptron* p){
     free(p->weights);
     free(p);
 }
+
+/// @brief Saves the perceptron to a separate file
+/// @param fname the name of the file
+/// @return Returns 0 if sucess and 1 if failure
+int percep_save(Perceptron *p, char* fname){
+    FILE *fp = fopen(fname, "wb");
+    if(!fp)
+        return EXIT_FAILURE;
+
+    //Write primitives
+    fwrite(&p->num_inputs, sizeof(int), 1, fp);
+    fwrite(&p->learning_rate, sizeof(double), 1, fp);
+    fwrite(&p->bias, sizeof(double), 1, fp);
+
+    //Write the weights array separately because the count is larger than 1
+    fwrite(p->weights, sizeof(double), p->num_inputs, fp);
+
+    fclose(fp);
+    return EXIT_SUCCESS;
+}
+
+

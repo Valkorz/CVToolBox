@@ -6,6 +6,7 @@
 #define EPOCHS 200
 #define FEATURES 4
 #define LEARNING_RATE 0.5
+#define DEFAULT_FNAME "percepsave.bin"
 
 // Function to extract features from an email
 void extract_features(const char *email, double *features) {
@@ -18,6 +19,7 @@ void extract_features(const char *email, double *features) {
 int main()
 {
     printf("\n Creating training data...");
+    int hasData = -1;
 
     srand(time(NULL));
     // Create some example data to train the perceptron with
@@ -46,11 +48,16 @@ int main()
     }
     
     // Create a new perceptron
-    Perceptron *p = percep_init(FEATURES, LEARNING_RATE);
+    // Load perceptron model data if it is found, otherwise initiate new instance.
+    Perceptron *p = NULL;
+    p = percep_load(DEFAULT_FNAME);
+    if(!p){
+        p = percep_init(FEATURES, LEARNING_RATE);
+    } else hasData = 1;
 
     // Train the perceptron
     printf("\n Training the perceptron...");
-    train(p, features, labels, MAX_LENGTH, EPOCHS);
+    percep_train(p, features, labels, MAX_LENGTH, EPOCHS);
 
     //Test the perceptron on a new message
     char* msg_normal = "Good Morning, I hope you have a nice day!"; //Not a scam message
@@ -61,10 +68,16 @@ int main()
     extract_features(msg_scam, scam_features);
 
     printf("\n Testing the perceptron...");
-    printf("\n Message 1: %s. Is Scam: %s", msg_normal, predict(p, normal_features) == 1? "TRUE" : "FALSE");
-    printf("\n Message 2: %s. Is Scam: %s", msg_scam, predict(p, scam_features) == 1? "TRUE" : "FALSE");
+    printf("\n Message 1: %s. Is Scam: %s", msg_normal, percep_predict(p, normal_features) == 1? "TRUE" : "FALSE");
+    printf("\n Message 2: %s. Is Scam: %s", msg_scam, percep_predict(p, scam_features) == 1? "TRUE" : "FALSE");
     
     
+    printf("\n Saving to percepsave.bin ...");
+    if(hasData < 0){
+        // Save the perceptron data if no file has been found
+        percep_save(p, DEFAULT_FNAME);
+    }
+
     system("pause");
     printf("\n Cleaning up...");
 
@@ -76,6 +89,7 @@ int main()
     free(features);
     free(normal_features);
     free(scam_features);
+    percep_free(p);
 
     return EXIT_SUCCESS;
 }

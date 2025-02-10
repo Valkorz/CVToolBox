@@ -6,6 +6,7 @@
 #define EPOCHS 200
 #define FEATURES 4
 #define LEARNING_RATE 0.5
+#define DEFAULT_FNAME "percepsave.bin"
 
 // Function to extract features from an email
 void extract_features(const char *email, double *features) {
@@ -18,6 +19,7 @@ void extract_features(const char *email, double *features) {
 int main()
 {
     printf("\n Creating training data...");
+    int hasData = -1;
 
     srand(time(NULL));
     // Create some example data to train the perceptron with
@@ -46,7 +48,12 @@ int main()
     }
     
     // Create a new perceptron
-    Perceptron *p = percep_init(FEATURES, LEARNING_RATE);
+    // Load perceptron model data if it is found, otherwise initiate new instance.
+    Perceptron *p = NULL;
+    p = percep_load(DEFAULT_FNAME);
+    if(!p){
+        p = percep_init(FEATURES, LEARNING_RATE);
+    } else hasData = 1;
 
     // Train the perceptron
     printf("\n Training the perceptron...");
@@ -65,6 +72,12 @@ int main()
     printf("\n Message 2: %s. Is Scam: %s", msg_scam, percep_predict(p, scam_features) == 1? "TRUE" : "FALSE");
     
     
+    printf("\n Saving to percepsave.bin ...");
+    if(hasData < 0){
+        // Save the perceptron data if no file has been found
+        percep_save(p, DEFAULT_FNAME);
+    }
+
     system("pause");
     printf("\n Cleaning up...");
 
@@ -76,6 +89,7 @@ int main()
     free(features);
     free(normal_features);
     free(scam_features);
+    percep_free(p);
 
     return EXIT_SUCCESS;
 }
