@@ -4,8 +4,8 @@ TODO:
 
 -> Document percepron in a markdown file
 -> test perceptron with csv file
--> finish the perceptron documentation
--> push and share on LinkedIn
+-> Implement derivative solving and sigmoid functions
+-> Implement Multilayer Perceptron
 
 MODELS TO BE IMPLEMENTED:
 
