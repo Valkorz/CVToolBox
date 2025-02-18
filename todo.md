@@ -4,8 +4,9 @@ TODO:
 
 -> Document percepron in a markdown file
 -> test perceptron with csv file
--> Implement derivative solving and sigmoid functions
--> Implement Multilayer Perceptron
+-> Implement sources/headers for activation functions in calclib.h
+-> Implement 'train' function for mlp.h
+-> Implement image-to-array algorithm
 
 MODELS TO BE IMPLEMENTED:
 

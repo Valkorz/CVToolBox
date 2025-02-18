@@ -16,6 +16,8 @@ typedef struct MultilayerPerceptron{
 }MultilayerPerceptron;
 
 MultilayerPerceptron* mlp_init(int out_num, int in_num, int layer_count, Loss loss_fn);
-void mlp_train(MultilayerPerceptron* perceptron, int epochs);
+void mlp_train(MultilayerPerceptron* mlp, int epochs);
+double mlp_predict(MultilayerPerceptron* mlp, double* features, int num_inputs);
+void mlp_free(MultilayerPerceptron* mlp);
 
 #endif

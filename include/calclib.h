@@ -6,5 +6,7 @@
 #define EULER 2.71828182846
 
 int factorial(int x);
+double relu(double in);
+double logCurve(double in);
 
 #endif
