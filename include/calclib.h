@@ -11,5 +11,6 @@ int factorial(int x);
 double relu(double in);
 double logCurve(double in);
 double dicotomy(fn function, double interval_a, double interval_b, double precision);
+double dicotomy_temp(fn function, double interval_a, double interval_b, double precision); //remove later
 
 #endif

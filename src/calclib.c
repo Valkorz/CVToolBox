@@ -42,3 +42,31 @@ double dicotomy(fn function, double interval_a, double interval_b, double precis
 
     return m;
 }
+
+
+//remove later
+double dicotomy_temp(fn function, double interval_a, double interval_b, double precision){
+    printf("| l | a | b | m | f(a) | f(b) | f(m) | f(a)*f(m) | f(m)*f(b) | b-a < e | |f(m)| < e |");
+    double k ,k_max = (log(abs(interval_b - interval_a)) - log(precision)) / log(2);
+    double m = (interval_a + interval_b) / 2;
+    double a = interval_a, b = interval_b, left = 0.0, right = 0.0;
+    int i;
+
+    for(k = 0.0, i = 0; k <= k_max; k += precision, i++){
+        left = function(a) * function(m);
+        right = function(b) * function(m);
+        printf("\n| %d | %.5f | %.5f | %.5f | %.5f | %.5f | %.5f | %.5f | %.5f | %s | %s |", i, a, b, m, function(a), function(b), function(m), function(a)*function(m), function(b)*function(m), (left < 0)? "-" : "+", (right < 0)? "-" : "+");
+        
+
+
+        if(left < 0){
+            b = m;
+        } else if(right < 0){
+            a = m;
+        } else break;
+
+        m = (a + b) / 2;
+    }
+
+    return m;
+}
