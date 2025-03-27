@@ -50,14 +50,18 @@ double lagrange_eval(double x, void *ctx){
     LagrangeParams *params = (LagrangeParams*)ctx;
     double result = 0;
 
+    printf("\n Starting lagrange interpolation for param count %d", params->count);
+
     for(int i = 0; i < params->count; i++){
         double term = *(params->y_points + i); 
         for(int j = 0; j < params->count; j++){
             if(i != j){
                 term *= (x - *(params->x_points + j)) / (*(params->x_points + i) - *(params->x_points + j));
+                // printf("\n (%.4f - %.4f) / (%.4f - %.4f) = %.4f", x, *(params->x_points + j), *(params->x_points + i), *(params->x_points + j), term);
             }
         }
         result += term;
+        // printf("\n Current result: %.6f", result);
     }
 
     return result;
@@ -74,13 +78,22 @@ LagrangeParams *create_lagrange_interpolator(double *x_points, double *y_points,
 
     params->x_points = malloc(sizeof(double) * count);
     params->y_points = malloc(sizeof(double) * count);
+    params->count = count;
     if(!params->x_points || !params->y_points){
         free(params->x_points);
         free(params->y_points);
         free(params);
         return NULL;
     }
+
+    for(int i = 0; i < count; i++){
+        *(params->x_points + i) = *(x_points + i);
+        *(params->y_points + i) = *(y_points + i);
+    }
+
+    printf("\n Created interpolator.");
     
+    return params;
 }
 
 /// @brief Creates a 'function with context' struct that stores the lagrange interpolation data and the evaluator function
@@ -89,6 +102,7 @@ LagrangeParams *create_lagrange_interpolator(double *x_points, double *y_points,
 /// @param count the count of Y points 
 /// @return the instantiated struct.
 FunctionWithCtx* createFunctionWithCtx(double *x_points, double *y_points, int count){
+    printf("\n Creating fn with context...");
     FunctionWithCtx* fwc = (FunctionWithCtx*)malloc(sizeof(FunctionWithCtx));
     fwc->ctx = create_lagrange_interpolator(x_points, y_points, count);
     fwc->f = lagrange_eval;
