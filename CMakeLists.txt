@@ -9,6 +9,11 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 # Source files
 file(GLOB SOURCES "src/*.c")
+set(
+    SOURCES
+    src/calclib.c
+    src/encode.c
+)
 
 # Create the library
 add_library(CVToolBox STATIC ${SOURCES})

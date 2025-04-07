@@ -8,6 +8,10 @@ TODO:
 -> Implement 'train' function for mlp.h
 -> Implement image-to-array algorithm
 
+PNG COMPRESSION CHECKLIST
+
+-> 
+
 MODELS TO BE IMPLEMENTED:
 
 - Neural Networks (Perceptron, Multilayer Perceptron, Convolutional Neural Networks, Recurrent Neural Networks, Generative Neural Networks, AutoEnconders, Transformers);
