@@ -13,6 +13,7 @@ set(
     SOURCES
     src/calclib.c
     src/encode.c
+    src/collections.c
 )
 
 # Create the library

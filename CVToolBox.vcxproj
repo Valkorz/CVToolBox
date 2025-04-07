@@ -286,6 +286,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemGroup>
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\calclib.c" />
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\encode.c" />
+    <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\collections.c" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
