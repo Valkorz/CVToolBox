@@ -7,6 +7,8 @@ TODO:
 -> Implement sources/headers for activation functions in calclib.h
 -> Implement 'train' function for mlp.h
 -> Implement image-to-array algorithm
+-> Finish implementing data structures with void pointer to ensure reusability
+-> review code to clean possible memory leaks
 
 PNG COMPRESSION CHECKLIST
 
