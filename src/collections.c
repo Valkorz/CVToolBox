@@ -9,6 +9,12 @@ Queue* queue_new(size_t data_size){
     queue->length = QUEUE_DEFAULT_LENGTH;
     queue->data_size = data_size;
 
+    if(queue == NULL || queue->items == NULL){
+        free(queue->items);
+        free(queue);
+        return NULL;
+    }
+
     //set all values to null
     int i;
     for(i = 0; i < QUEUE_DEFAULT_LENGTH; i++){
@@ -90,4 +96,54 @@ void queue_free(Queue* queue){
     }
     free(queue->items);
     free(queue);
+}
+
+void queue_clear(Queue* queue){
+    int len = queue->length, i;
+    for(i = 0; i < len; i++){
+        free(*(queue->items + i));
+        *(queue->items + i) = NULL;
+    }
+}
+
+void queue_sortByAscending(Queue** queue){
+    int len = (*queue)->length, i,c;
+    int int_s_value = 30000; //variable to store smallest value
+    void** void_s_value = NULL;
+    Queue* newQueue = queue_new((*queue)->data_size);
+
+    for(i = 0; i < len; i++){
+        void_s_value = NULL;
+        for(c = 0; c < len; c++){
+            void** current_value = &((*queue)->items + c);
+            if(*((int*)current_value) < int_s_value){
+                void_s_value = current_value;
+                printf("\n Current smallest value: %p (%d)", void_s_value, *((int*)void_s_value));
+            }
+        }
+        queue_push(newQueue, void_s_value);
+
+    }
+}
+
+Queue* queue_clone(Queue* src){
+    Queue* queue = (Queue*)malloc(sizeof(Queue));
+    queue->items = (void**)malloc(sizeof(void*) * src->length);
+    queue->length = src->length;
+    queue->data_size = src->data_size; 
+
+    if(queue == NULL || queue->items == NULL){
+        free(queue->items);
+        free(queue);
+        return NULL;
+    }
+
+    int i;
+    for(i = 0; i < queue->length; i++){
+        *(queue->items + i) = malloc(queue->data_size);
+        memcpy(*(queue->items + i), *(src->items + i), src->data_size);
+        printf("\n (%d) copied from src (%p) to target (%p): %p > %p", i, queue, src, *(queue->items + i), *(src->items + i));
+    }
+
+    return queue;
 }
