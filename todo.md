@@ -1,12 +1,13 @@
 ### You can ignore this file, it's just a to-do list so I don't get lost.
 
-TODO:
+TODO (Ordered by priority):
 
--> Document percepron in a markdown file
--> test perceptron with csv file
--> Implement sources/headers for activation functions in calclib.h
--> Implement 'train' function for mlp.h
+-> Implement a Huffman Encoder
 -> Implement image-to-array algorithm
+-> Implement 'train' function for mlp.h
+-> test perceptron with csv file
+-> Document percepron in a markdown file
+-> Implement sources/headers for activation functions in calclib.h
 -> Finish implementing data structures with void pointer to ensure reusability
 -> review code to clean possible memory leaks
 
