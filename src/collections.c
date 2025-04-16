@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
 
 Queue* queue_new(size_t data_size){
     Queue* queue = (Queue*)malloc(sizeof(Queue));
@@ -112,10 +113,11 @@ void queue_sortByAscending(Queue** queue){
     void** void_s_value = NULL;
     Queue* newQueue = queue_new((*queue)->data_size);
 
+    //unfinished
     for(i = 0; i < len; i++){
         void_s_value = NULL;
         for(c = 0; c < len; c++){
-            void** current_value = &((*queue)->items + c);
+            void** current_value = ((*queue)->items + c);
             if(*((int*)current_value) < int_s_value){
                 void_s_value = current_value;
                 printf("\n Current smallest value: %p (%d)", void_s_value, *((int*)void_s_value));

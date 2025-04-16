@@ -4,16 +4,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
 
-//QUEUES
+typedef struct Queue Queue;
+
 typedef void(*QueueSorter)(Queue** queue);
 
-typedef struct Queue{
+struct Queue{
     void** items;
     unsigned int length;
     size_t data_size;
     QueueSorter sort;
-}Queue;
+};
+
 
 Queue* queue_new(size_t data_size);
 void queue_push(Queue* queue, void* item);
