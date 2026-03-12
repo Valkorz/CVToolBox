@@ -4,6 +4,9 @@
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\calclib.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\cllist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\encode.c">
       <Filter>Source Files</Filter>
     </ClCompile>

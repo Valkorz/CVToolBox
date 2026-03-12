@@ -22,15 +22,15 @@ UTILS
 //This serial number can be used for sorting, if the sorting function requests the reading of all LinkIdentifiers
 //hashed as "serial_number"
 //
-typedef struct Link{
-    void* value;
-    LinkIdentifier* identifier;
-}Link;
-
 typedef struct LinkIdentifier{
     void* data;
     char* hash;
 }LinkIdentifier;
+
+typedef struct Link{
+    void* value;
+    LinkIdentifier* identifier;
+}Link;
 
 Link* create_link(void* value, int i_count, ...);
 void destroy_link(Link* link);

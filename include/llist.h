@@ -5,7 +5,6 @@
 
 /*
     |||| LINKED LIST |||
-
 */
 typedef struct Node{
     void *data;

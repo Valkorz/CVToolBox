@@ -70,7 +70,7 @@ Link* queue_pop(Queue* queue){
             (queue->items + len - 1)->value = NULL;
         }
 
-        next = *(queue->items + i + 1);
+        next = (queue->items + i + 1);
         if(next == NULL){
             break;
         }
@@ -114,7 +114,7 @@ void queue_clear(Queue* queue){
     }
 }
 
-void queue_sortByAscending(Queue** queue){
+void queue_sortByAscending(Queue** queue, char* nameof_identifier){
     int len = (*queue)->length, i,c;
     int int_s_value = 30000; //variable to store smallest value
     Link* void_s_value = NULL;
@@ -150,7 +150,7 @@ Queue* queue_clone(Queue* src){
     int i;
     for(i = 0; i < queue->length; i++){
         (queue->items + i)->value = malloc(queue->data_size);
-        memcpy((queue->items + i)->value, *(src->items + i), src->data_size);
+        memcpy((queue->items + i)->value, (src->items + i), src->data_size);
         printf("\n (%d) copied from src (%p) to target (%p): %p > %p", i, queue, src, (queue->items + i)->value, *(src->items + i));
     }
 

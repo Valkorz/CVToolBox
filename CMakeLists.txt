@@ -12,6 +12,7 @@ file(GLOB SOURCES "src/*.c")
 set(
     SOURCES
     src/calclib.c
+    src/cllist.c
     src/encode.c
     src/collections.c
 )

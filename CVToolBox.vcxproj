@@ -24,7 +24,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EEEAE9EB-B245-3DC4-A317-E6E5221AE2BC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
     <ProjectName>CVToolBox</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
@@ -285,6 +285,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\calclib.c" />
+    <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\cllist.c" />
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\encode.c" />
     <ClCompile Include="C:\Users\pivar\Documents\Projects\CVToolBox\src\collections.c" />
   </ItemGroup>
