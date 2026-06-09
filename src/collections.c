@@ -23,10 +23,9 @@ Queue* queue_new(size_t data_size){
         return NULL;
     }
 
-    // set all values to null
     int i;
     for(i = 0; i < QUEUE_DEFAULT_LENGTH; i++){
-        (queue->items + i)->value == NULL;
+        (queue->items + i)->value = NULL;
     }
 
     return queue;

@@ -12,8 +12,13 @@ typedef struct Node{
     struct Node* _next;
 }Node;
 
-typedef Node* CLList;
+typedef struct CLList{
+    Node* entries;
+    int l_size;
+}CLList;
 
-void CreateCLL(CLList* va_list);
+void createCLL(CLList* va_list, unsigned int l_size);
+void printCLL(CLList list);
+int addEntry(CLList va_list, void* val);
 
 #endif

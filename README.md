@@ -1,40 +1,68 @@
 # CVToolBox
 
-Computer Vision ToolBox: a repository containing every implementation relative to Artificial Inteligence, in the C programming language. The finished state of the project should include: 
-- Different data structures (trees, nodes, lists, hashmaps, queues);
-- Mathematical functions targeted towards data conversion and AI statistics;
-- Different AI algorithms (node networks, probability, supervised learning, non-supervised learning, reinforcement learning, semi-supervised);
+A C library implementing data structures, sorting algorithms, and a multi-layer perceptron (MLP) for image recognition — built from scratch, with no external AI/ML libraries.
 
-*Please note that this is a work in progress: not all features have been promptly added.
+The goal is low-level understanding: every component is hand-implemented, from linked list traversal to backpropagation. This is a research and education project, not a production framework.
+
+## Goals
+
+1. **Data structures** — linked list, circular linked list, binary tree, hash map, queue
+2. **Sorting algorithms** — planned
+3. **Neural networks** — single-layer perceptron (complete), multi-layer perceptron for image recognition (in progress)
 
 ## Why C?
 
-Being aware of **Python**'s high applicability in the Artificial Intelligence field certainly nourishes some skepticism of C being the programming language of choice for this endeavor, given its old age and more confusing syntax. 
-The choice was made due to the author's wish to create something entirely (or most, at least) original, this includes the avoidance of most libraries, requiring deep knowledge of the machine to create resource-efficient AI implementations. Moreover, this allowed the author to further understand how an AI model is trained and executed throughout every step... including the **memory aspect**. This, therefore, does not mean the author's opinion on Python has a negative connotation, quite the opposite: It is prefered that an AI project uses Python instead, with more fleshed-out libraries such as OpenCV, PyTorch and TensorFlow.
+Python with PyTorch or TensorFlow is the practical choice for AI. This project exists for the opposite reason: to understand how AI works at the machine level. That means manual memory management, no automatic differentiation, and no library that hides what happens during training. If you want to understand how gradient descent actually changes weights in memory — this is that kind of project.
 
-## Why this project?
+## Implementation Status
 
-This project is predominantly for research and education, providing detailed documentation that helps the user understand the 'whys' or 'hows' of Artificial Intelligence technology, even in the low level aspect.
+| Module | Status |
+|--------|--------|
+| Linked List | Complete |
+| Circular Linked List | Complete |
+| Binary Tree | Complete |
+| Hash Map | Complete |
+| Queue | Complete |
+| String utilities | Complete |
+| Math utilities (ReLU, sigmoid, Lagrange, dichotomy) | Complete |
+| CSV / DataFrame | Complete |
+| Encoding utilities | Complete |
+| Single-layer Perceptron | Complete |
+| Neuron / activation function abstraction | Complete |
+| Multi-layer Perceptron | In Progress |
+| Image loading pipeline | Planned |
+| Sorting algorithms | Planned |
+| Huffman encoding | Planned |
 
----
+## Building
 
-## Building the project
+### Prerequisites
 
-### Using CMAKE and Visual Studio Code on Windows
+- CMake 3.10+
+- A C11-compatible compiler (MSVC, GCC, Clang)
 
-1. **Generate Visual Studio Project Files**:
-    - Open a Command Prompt or PowerShell window.
-    - Navigate to the project's root directory and create Visual Studio project files:
-        ```sh
-            cmake .
-        ```
-2. **Build the project**:
-    ```sh
-        cmake --build .
-    ```
+### Steps
 
-3. **Install the project (Optional)**:
-    You can also install the compiled project into a specified directory:
-    ```sh
-        cmake --install . --prefix /path/to/install
-    ```
+```sh
+cmake .
+cmake --build .
+```
+
+### Install (optional)
+
+```sh
+cmake --install . --prefix /path/to/install
+```
+
+## Examples
+
+Working examples are in the [`examples/`](examples/) directory:
+
+- **perceptronExample.c** — email spam classifier trained on hardcoded features
+- **csvConversionExample.c** — loading, creating, and saving CSV files as DataFrames
+
+## Documentation
+
+- [Single-layer Perceptron](docs/perceptron.md)
+- [Binary Tree](docs/BinaryTree.md)
+- [Multi-layer Perceptron](docs/mlp.md) *(in progress)*
